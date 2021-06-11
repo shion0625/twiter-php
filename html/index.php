@@ -1,12 +1,31 @@
 <?php
-$dsn = 'mysql:host=mysql;dbname=test;charset=utf8';
-$user = 'root';
-$password = 'root';
-try {
-  $db = new PDO($dsn, $user, $password);
-  echo "接続成功\n";
-} catch (PDOException $e) {
-  echo "接続失敗: ".$e->getMessage()."\n";
-  exit();
-}
+	include("./views/header.php");
+
+	if($_GET['page'] == 'login') {
+		include("./views/login.php");
+	} else if($_GET['page'] == 'signUp') {
+		include("./views/signUp.php");
+	} else if($_GET['page'] == 'menu') {
+		include("./views/menu.php");
+	}
+	// 	include("views/timeline.php");
+
+	// } else if($_GET['page'] == 'yourtweets') {
+
+	// 	include("views/yourtweets.php");
+
+	// } else if($_GET['page'] == 'search') {
+
+	// 	include("views/footer.php");
+
+	// } else if($_GET['page'] == 'profiles') {
+
+	// 	include("views/profiles.php");
+	// } else {
+
+	// 	include("views/home.php");
+
+	// }
+	// include("views/footer.php");
+
 ?>
