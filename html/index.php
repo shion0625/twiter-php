@@ -1,6 +1,6 @@
 <?php
+	include("./function.php");
 	include("./views/header.php");
-
 	if($_GET['page'] == 'login') {
 		include("./views/login.php");
 	} else if($_GET['page'] == 'signUp') {
