@@ -50,10 +50,10 @@ $(()=> {
     $('#errMsgPw').text('');
     //メールアドレスの正規表現
     const regexpEm = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/;
-    const regexpPw =/ ^(?=.*[A-Z])(?=.*[.?/-])[a-zA-Z0-9.?/-]{8,24}$ /
-    const input_username = $('#input_username').val();
-    const input_email = $('#input_email').val();
-    const input_password = $('#input_password').val();
+    const regexpPw =/^(?=.*[A-Z])(?=.*[.?/-])[a-zA-Z0-9.?/-]{8,24}$/;
+    const input_username = $('#input_username').val().trim();
+    const input_email = $('#input_email').val().trim();
+    const input_password = $('#input_password').val().trim();
     if(input_username == "") {
       $('#errMsgUser').text('ユーザー名が入力されていません');
       is_status = false;
@@ -72,6 +72,7 @@ $(()=> {
       is_status = false;
     } else if(!regexpPw.test(input_password)) {
       let msg = 'パスワードの条件を満たしていません';
+      console.log(input_password);
       $('#errMsgPw').html(msg.replace(/\n/g, '<br>'));
       is_status = false;
     }
