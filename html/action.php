@@ -11,6 +11,16 @@
     } else {
       print_r("successful");
     }
+  } else if($_GET['action'] == 'login') {
+    $error ="";
+    print_r($_POST);
+    if (!$_POST['username']) {
+      $error = "ユーザ名が入力されていません。";
+    } else if(!$_POST['password']) {
+      $error = "パスワードが入力されていません.";
+    } else {
+      print_r("successful");
+    }
   }
   echo $error;
 ?>
