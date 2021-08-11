@@ -75,7 +75,8 @@ $(() => {
     }
   });
 });
-
+//ログインの場合と違う場合で画像が変わる
+//ログイン後と前で画像を変える。
 $(() => {
   let param = $(location).attr('search');
   const locate = param.split('page=')[1];
