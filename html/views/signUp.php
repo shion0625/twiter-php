@@ -29,13 +29,6 @@
 </div>
 
 <script>
-//Jsonのデコード
-function decodeJson(res) {
-  const resString = res.toString();
-  const resObj = JSON.parse(resString);
-  return resObj;
-}
-
 //パスワードの可視化と不可視化
 $(()=> {
   $('#eye-icon').on('click',() => {

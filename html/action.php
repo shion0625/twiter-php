@@ -24,9 +24,7 @@ function h($str)
     }
     //フロントサイドから送られてきた情報のチェック
     //一つの連想配列にして各分岐で値を追加それで分ける!
-    $errorRegexpMsg = [
-      'regexpMsg'=>'メールアドレスが間違っています。'
-    ];
+
     $username = $_POST['username'];
     $password = $_POST['password'];
     $email = $_POST['email'];
@@ -53,7 +51,6 @@ function h($str)
         $flag = $stmt->execute();
         if($flag) {
           echo "ユーザの登録に成功しました。";
-          // echo json_encode($successMsgSignUP,JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
         } else {
           echo "ユーザの登録に失敗しました。";
         }
@@ -63,30 +60,28 @@ function h($str)
       //適切なメールアドレスで無い
       echo "メールアドレスが間違っています。";
     }
-//ログインの場合
+//ログインの場合/////////////////////////////////////////////////
   } else if($_GET['action'] == 'login') {
-    $errorArray = [
-      'regexpMsg'=>'間違ったメールアドレス、パスワードです。',
-      'signUpMsg'=>'すでにそのメールアドレスは使用されています。。'
-    ];
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    //database connection
+    try {
+      $dbh = new PDO($dsn, $user, $password);
+      $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch (PDOException $e) {
+      print_r("接続失敗: ".$e->getMessage()."\n");
+      exit();
+    }
     $email = $_POST['email'];
-    $regexpEm = '/^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/';
-    $regexpPw = '/^(?=.*[A-Z])(?=.*[.?\/-])[a-zA-Z0-9.?\/-]{8,24}$/';
-    if(preg_match($regexpEm,$email) && preg_match($regexpPw, $password)) {
-      $query = "SELECT * FROM users WHERE user_name=:username AND password=:password AND email=:email";
-      $stmt = $dbh->prepare($query);
-      $stmt->bindValue(":username", $username);
-      $stmt->bindValue(":password", $password);
-      $stmt->bindValue(":email", $email);
-      $stmt->execute();
-      $result = $stmt->fetch(PDO::FETCH_ASSOC);
-      if($result) {
-        echo json_encode($result, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
-      } else {
-        // echo json_encode();
-      }
+    $password = $_POST['password'];
+    // $regexpEm = '/^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/';
+    // $regexpPw = '/^(?=.*[A-Z])(?=.*[.?\/-])[a-zA-Z0-9.?\/-]{8,24}$/';
+    $loginQuery = "SELECT * FROM users WHERE password=:password AND email=:email";
+    $stmt = $dbh->prepare($loginQuery);
+    $stmt->bindValue(":password", $password);
+    $stmt->bindValue(":email", $email);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    if($result) {
+      echo json_encode($result, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
     } else {
       echo false;
     }
