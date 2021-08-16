@@ -268,6 +268,25 @@ body header #header #header_right #header_menu .nav-sp.slide {
   right: 0;
 }
 
+body #msg_alert {
+  height: 5rem;
+  line-height: 5rem;
+  font-size: 3rem;
+  width: 100%;
+  margin: 0;
+  display: none;
+  text-align: center;
+  color: wheat;
+  background-color: dimgrey;
+  opacity: 0.55;
+  border: 0.1rem solid #aaa;
+  -webkit-box-shadow: 0.2rem 0.2rem 0.4rem #888;
+          box-shadow: 0.2rem 0.2rem 0.4rem #888;
+  z-index: 100;
+  position: absolute;
+  top: 0;
+}
+
 body #signUp_all_contents {
   margin: 2rem auto;
   display: -webkit-box;
@@ -309,12 +328,12 @@ body #signUp_all_contents #signUp_contents #signUp_main {
   margin: 1rem auto;
 }
 
-body #signUp_all_contents #signUp_contents #signUp_main .require {
+body #signUp_all_contents #signUp_contents #signUp_main form .require {
   border: 1px solid #ffc1c6;
   color: #f23363;
 }
 
-body #signUp_all_contents #signUp_contents #signUp_main .require_pos {
+body #signUp_all_contents #signUp_contents #signUp_main form .require_pos {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -323,47 +342,63 @@ body #signUp_all_contents #signUp_contents #signUp_main .require_pos {
           justify-content: space-between;
 }
 
-body #signUp_all_contents #signUp_contents #signUp_main .box_setting {
+body #signUp_all_contents #signUp_contents #signUp_main form .box_setting {
   width: 90%;
   margin: auto;
   padding: 1rem 0;
 }
 
-body #signUp_all_contents #signUp_contents #signUp_main .errMsg {
+body #signUp_all_contents #signUp_contents #signUp_main form .errMsg {
   color: red;
 }
 
-body #signUp_all_contents #signUp_contents #signUp_main input::-webkit-input-placeholder {
+body #signUp_all_contents #signUp_contents #signUp_main form input {
+  margin: 0 5%;
+  padding: 0 0 0 2.6rem;
+  height: 4rem;
+  width: 90%;
+}
+
+body #signUp_all_contents #signUp_contents #signUp_main form #input_email {
+  background: url(../icon/mail.png) no-repeat #64a1e7 5px center;
+}
+
+body #signUp_all_contents #signUp_contents #signUp_main form #input_password {
+  background: url(../icon/key.png) no-repeat #64a1e7 5px center;
+}
+
+body #signUp_all_contents #signUp_contents #signUp_main form input::-webkit-input-placeholder {
   color: #8fa8ec;
   font-size: 1.2rem;
 }
 
-body #signUp_all_contents #signUp_contents #signUp_main input:-ms-input-placeholder {
+body #signUp_all_contents #signUp_contents #signUp_main form input:-ms-input-placeholder {
   color: #8fa8ec;
   font-size: 1.2rem;
 }
 
-body #signUp_all_contents #signUp_contents #signUp_main input::-ms-input-placeholder {
+body #signUp_all_contents #signUp_contents #signUp_main form input::-ms-input-placeholder {
   color: #8fa8ec;
   font-size: 1.2rem;
 }
 
-body #signUp_all_contents #signUp_contents #signUp_main input::placeholder {
+body #signUp_all_contents #signUp_contents #signUp_main form input::placeholder {
   color: #8fa8ec;
   font-size: 1.2rem;
 }
 
-body #signUp_all_contents #signUp_contents #signUp_main #password_box {
+body #signUp_all_contents #signUp_contents #signUp_main form #password_box {
   position: relative;
 }
 
-body #signUp_all_contents #signUp_contents #signUp_main #password_box #eye_icon {
+body #signUp_all_contents #signUp_contents #signUp_main form #password_box #eye-icon {
   position: absolute;
-  right: 1rem;
-  top: 0.5rem;
+  top: 37%;
+  right: 8%;
+  z-index: 10;
 }
 
-body #signUp_all_contents #signUp_contents #signUp_main #signUpBtn {
+body #signUp_all_contents #signUp_contents #signUp_main form #signUpBtn {
   display: block;
   margin: 2rem auto;
 }
@@ -386,60 +421,76 @@ body #login_all_contents #login {
 
 body #login_all_contents #sns_contents {
   width: 45%;
-  margin: 3% 1%;
   background-color: brown;
+  margin-right: 3%;
 }
 
 body #login_all_contents #login_contents {
   width: 45%;
-  margin: 3% 1%;
   font-size: 1.4rem;
   background-color: cadetblue;
 }
 
-body #login_all_contents #login_contents .loginForm_input_email {
-  background: url(../icon/mail.png) no-repeat #fff 5px center;
+body #login_all_contents #login_contents form {
+  margin: 2% 0;
 }
 
-body #login_all_contents #login_contents .loginForm_input_pw {
-  background: url(../icon/key.png) no-repeat #fff 5px center;
+body #login_all_contents #login_contents form .loginForm_input_email {
+  background: url(../icon/mail.png) no-repeat #ffc1c6 5px center;
 }
 
-body #login_all_contents #login_contents input {
+body #login_all_contents #login_contents form .loginForm_input_pw {
+  background: url(../icon/key.png) no-repeat #ffc1c6 5px center;
+}
+
+body #login_all_contents #login_contents form input {
   margin: 0 5%;
   padding: 0 0 0 2.6rem;
   height: 4rem;
   width: 90%;
 }
 
-body #login_all_contents #login_contents #loginBtn {
-  margin: 2% 5%;
+body #login_all_contents #login_contents form #loginBtn {
+  text-align: center;
+  margin: 2% 5% 0 5%;
 }
 
-body #login_all_contents #login_contents input::-webkit-input-placeholder {
-  color: #8fa8ec;
-  font-size: 1.2rem;
-}
-
-body #login_all_contents #login_contents input:-ms-input-placeholder {
+body #login_all_contents #login_contents form input::-webkit-input-placeholder {
   color: #8fa8ec;
   font-size: 1.2rem;
 }
 
-body #login_all_contents #login_contents input::-ms-input-placeholder {
+body #login_all_contents #login_contents form input:-ms-input-placeholder {
   color: #8fa8ec;
   font-size: 1.2rem;
 }
 
-body #login_all_contents #login_contents input::placeholder {
+body #login_all_contents #login_contents form input::-ms-input-placeholder {
   color: #8fa8ec;
   font-size: 1.2rem;
 }
-/*# sourceMappingURL=style.css.map */r: #8fa8ec;
-  font-size: 1.2rem;
-}
-body #login_all_contents #login_contents input::placeholder {
+
+body #login_all_contents #login_contents form input::placeholder {
   color: #8fa8ec;
   font-size: 1.2rem;
+}
+
+body #login_all_contents #login_contents form #pwBox {
+  position: relative;
+}
+
+body #login_all_contents #login_contents form #pwBox #eye-icon {
+  position: absolute;
+  top: 30%;
+  right: 8%;
+  z-index: 10;
+}
+/*# sourceMappingURL=style.css.map */relative;
+}
+body #login_all_contents #login_contents form #pwBox #eye-icon {
+  position: absolute;
+  top: 30%;
+  right: 8%;
+  z-index: 10;
 }
 /*# sourceMappingURL=style.css.map */

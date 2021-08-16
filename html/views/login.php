@@ -1,51 +1,41 @@
 <?php
 require_once __DIR__ . '/../function.php';
-$dsn = 'mysql:host=mysql;dbname=test;charset=utf8';
-$user = 'root';
-$password = 'root';
-$options = array(PDO::MYSQL_ATTR_INIT_COMMAND=>"SET CHARACTER SET 'utf8'");
-error_reporting(E_ALL & ~E_NOTICE);
-  require_unlogined_session();
-  try {
-    $dbh = new PDO($dsn, $user, $password);
-    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  } catch (PDOException $e) {
-    print_r("接続失敗: ".$e->getMessage()."\n");
-    exit();
-  }
+session_start();
+
   //ログイン状態の場合ログイン後のページにリダイレクト
-  if (isset($_SESSION['userID'])) {
-    session_regenerate_id(TRUE);
-    header("Location: https://www.google.com");
-    // echo "すでにログインしています。";
-    exit();
-  }
-  if(!$_SERVER['REQUEST_METHOD'] === 'POST') {
-    $message = "メールアドレスとパスワードを入力してください。POSTメソッドで送信してください";
+  require_unlogined_session();
+  if($_SERVER['REQUEST_METHOD'] != 'POST') {
+    $message = "";
   }
   else {
     //メールアドレスまたはパスワードが送信されて来なかった場合
-    if(empty($_POST['email']) || empty($_POST['password'])) {
-      $message = "メールアドレスとパスワードを入力してください";
+    $is_pass = true;
+    $email =$_POST['email'];
+    $password=$_POST['password'];
+    if(empty($email)) {
+      $messageEmail = "メールアドレスを入力してください。";
+      $is_pass = false;
+    }
+    if(empty($password)) {
+      $messagePw = "パスワードを入力してください。";
+      $is_pass = false;
     }
     //メールアドレスとパスワードが送信されて来た場合
-    else {
+    if($is_pass) {
       //post送信されてきたメールアドレスがデータベースにあるか検索
       try {
-        $loginQuery = "SELECT * FROM users WHERE password=:password AND email=:email";
+        $loginQuery = "SELECT * FROM users WHERE email=:email";
         $stmt = $dbh->prepare($loginQuery);
-        $stmt->bindValue(":password", $password);
         $stmt->bindValue(":email", $email);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
       }
-      catch (PDOExeption $e) {
+      catch (PDOException $e) {
         exit('データベースエラー');
       }
       //検索したユーザー名に対してパスワードが正しいかを検証
     //正しくないとき
-    // if (!password_verify($_POST['password'], $result['password'])) {
-      if($_POST['password'] === $result['password']){
+    if (!password_verify($password, $result['password'])) {
       $message="メールアドレスかパスワードが違います";
     }
     //正しいとき
@@ -58,7 +48,24 @@ error_reporting(E_ALL & ~E_NOTICE);
   }
 }
 $message = h($message);
+$messageEmail = h($messageEmail);
+$messagePw = h($messagePw);
 ?>
+<script>
+//パスワードの可視化と不可視化
+$(()=> {
+  $('#eye-icon').on('click',() => {
+    const input = $('#input_password');
+    if (input.attr('type') == 'password') {
+      input.attr('type','text');
+    } else {
+      input.attr('type','password');
+    }
+    $('#eye-icon').toggleClass('fa-eye');
+    $('#eye-icon').toggleClass('fa-eye-slash');
+  });
+});
+</script>
 
 <div id="login_all_contents">
   <h2>ログイン</h2>
@@ -69,9 +76,13 @@ $message = h($message);
     <div id="login_contents">
       <div class="message"><?php echo $message;?></div>
       <form action=?page=login method=POST>
+        <div class="message"><?php echo $messageEmail;?></div>
         <input id="input_email" class="loginForm_input_email" name="email" type="text" placeholder="メールアドレスを入力して下さい">
-        <p id="errMsgPw"></p>
-        <input id="input_password" class="loginForm_input_pw" name="password" type="password" placeholder="パスワードを入力して下さい">
+        <div id="pwBox">
+          <div class="message"><?php echo $messagePw;?></div>
+          <input id="input_password" class="loginForm_input_pw" name="password" type="password" placeholder="パスワードを入力して下さい"><i id="eye-icon"class="fas fa-eye"></i>
+        </div>
+
         <button id="loginBtn">ログイン</button>
       </form>
     </div>

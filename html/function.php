@@ -1,4 +1,25 @@
 <?php
+session_start();
+print_r(session_id());
+print_r($_SESSION['userID']);
+$dsn = 'mysql:host=mysql;dbname=test;charset=utf8';
+$user = 'root';
+$password = 'root';
+$options = array(
+  PDO::MYSQL_ATTR_INIT_COMMAND=>"SET CHARACTER SET 'utf8'",
+  PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+  PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+  PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true
+);
+error_reporting(E_ALL & ~E_NOTICE);
+try {
+  $dbh = new PDO($dsn, $user, $password);
+  $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+  print_r("接続失敗: ".$e->getMessage()."\n");
+  exit();
+}
+
 /**
  * htmlspecialcharsのラッパー関数
  *
@@ -11,21 +32,22 @@ function h($str)
 }
 
 function require_unlogined_session() {
-session_start();
-  if (isset($_SESSION['email'])) {
-    header('Location: /');
-    echo "すでにログインしています";
-    exit;
+  if (isset($_SESSION['userID'])) {
+    session_regenerate_id(TRUE);
+    header("Location: /");
+    // echo "すでにログインしています。";
+  exit();
   }
 }
 
-function require_logined_session() {
-//  session_start();
-  if (!isset($_SESSION['email'])) {
-    header('Location: /login.php');
-    exit;
-  }
-}
+// function require_logined_session() {
+  // session_regenerate_id(TRUE);
+//   if (!isset($_SESSION['userID'])) {
+//     header('Location: /?page=login');
+//     exit;
+//   }
+// }
+
 /**
  * CSRFトークンの生成
  *

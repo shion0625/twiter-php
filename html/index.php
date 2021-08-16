@@ -1,10 +1,7 @@
 <?php
-session_start();
-print_r(session_id());
-print_r($_SESSION['userID']);
 // include ( __DIR__ . '/assets/lib/ChromePhp.php');
+include ( __DIR__ . '/function.php');
 include ( __DIR__ . '/views/header.php');
-  include ( __DIR__ . '/function.php');
   if($_GET['page'] == 'login') {
     include ( __DIR__ . '/views/login.php');
   } else if($_GET['page'] == 'signUp') {
