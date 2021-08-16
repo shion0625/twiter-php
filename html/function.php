@@ -12,7 +12,7 @@ function h($str)
 
 function require_unlogined_session() {
 session_start();
-  if (isset($_SESSION['username'])) {
+  if (isset($_SESSION['email'])) {
     header('Location: /');
     echo "すでにログインしています";
     exit;
@@ -21,7 +21,7 @@ session_start();
 
 function require_logined_session() {
 //  session_start();
-  if (!isset($_SESSION['username'])) {
+  if (!isset($_SESSION['email'])) {
     header('Location: /login.php');
     exit;
   }
@@ -48,8 +48,4 @@ function validate_token($token)
     // 送信されてきた$tokenがこちらで生成したハッシュと一致するか検証
     return $token === generate_token();
 }
-
-  if($_GET['function'] = "logout") {
-    session_unset();
-  }
 ?>

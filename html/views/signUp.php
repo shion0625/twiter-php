@@ -1,3 +1,6 @@
+<?php
+print_r($_SESSION['userID']);
+?>
 <div id="signUp_all_contents">
   <div id="sns_contents">
     <h2>SNSアカウントで会員登録</h2>

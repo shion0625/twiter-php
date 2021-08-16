@@ -32,10 +32,17 @@
         </div>
         <div id="header_right">
           <div id="header_login">
-            <a href="?page=login" alt="ログインボタン"><i class="fas fa-door-open"></i>
+            <?php if(isset($_SESSION['userID'])) :?>
+            <a href="action.php?action=logout" alt="ログアウトボタン">
+              <!-- <i class="fas fa-door-open"></i> -->
             <i class="fas fa-door-closed"></i>
-            <p>ログイン</p>
+            <p>ログアウト</p>
           </a>
+          <?php else :?>
+            <a href="?page=login" alt="ログインボタン"><i class="fas fa-door-open"></i>
+            <!-- <i class="fas fa-door-closed"></i> -->
+            <p>ログイン</p>
+          <?php endif; ?>
           </div>
           <div id="header_menu">
             <div id="menu_bar">
@@ -78,15 +85,15 @@ $(() => {
 });
 //ログインの場合と違う場合で画像が変わる
 //ログイン後と前で画像を変える。
-$(() => {
-  let param = $(location).attr('search');
-  const locate = param.split('page=')[1];
-  if(locate == 'login') {
-    $('.fa-door-open').hide();
-    $('.fa-door-closed').show();
-  } else {
-    $('.fa-door-open').show();
-    $('.fa-door-closed').hide();
-  }
-})
+// $(() => {
+//   let param = $(location).attr('search');
+//   const locate = param.split('page=')[1];
+//   if(locate == 'login') {
+//     $('.fa-door-open').hide();
+//     $('.fa-door-closed').show();
+//   } else {
+//     $('.fa-door-open').show();
+//     $('.fa-door-closed').hide();
+//   }
+// })
 </script>
