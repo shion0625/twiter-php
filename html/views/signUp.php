@@ -1,6 +1,6 @@
 <div id="signUp_all_contents">
   <div id="sns_contents">
-    <h2>SNSアカウントでログイン</h2>
+    <h2>SNSアカウントで会員登録</h2>
   </div>
   <div id="signUp_contents">
     <h2>会員登録</h2>

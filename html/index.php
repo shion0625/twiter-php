@@ -1,12 +1,13 @@
 <?php
-	include("./function.php");
-	include("./views/header.php");
+session_start();
+	include ( __DIR__ . '/function.php');
+	include ( __DIR__ . '/views/header.php');
 	if($_GET['page'] == 'login') {
-		include("./views/login.php");
+		include ( __DIR__ . '/views/login.php');
 	} else if($_GET['page'] == 'signUp') {
-		include("./views/signUp.php");
+		include ( __DIR__ . '/views/signUp.php');
 	} else if($_GET['page'] == 'menu') {
-		include("./views/menu.php");
+		include ( __DIR__ . '/views/menu.php');
 	}
 	// 	include("views/timeline.php");
 
