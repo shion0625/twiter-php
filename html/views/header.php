@@ -3,6 +3,8 @@ session_start();
 $msgAlert = $_SESSION['messageAlert'];
 echo $_SESSION['messageAlert'];
 $_SESSION['messageAlert'] = '';
+echo $_SESSION;
+echo session_id();
 ?>
 
 <script>
