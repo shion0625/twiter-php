@@ -1,63 +1,97 @@
-<div id="login">
-  <h2>login</h2>
-  <p id="errMsgUser"></p>
-  <label for="username">email: </label>
-  <input id="input_email"type="text">
-  <p id="errMsgPw"></p>
-  <label for="password">password:</label>
-  <input id="input_password" type="password">
-  <button id="loginBtn">ログイン</button>
-</div>
+<?php
+require_once __DIR__ . '/../function.php';
+// session_start();
 
-<script>
-//Jsonのデコード
-function decodeJson(res) {
-  const resString = res.toString();
-  const resObj = JSON.parse(resString);
-  return resObj;
-}
-
-$(() => {
-  $('#loginBtn').on('click', () => {
-    let is_status = true;
-    $('errMsgUser').text('');
-    $('errMsgPw').text('');
-    const input_email = $('#input_email').val();
-    const input_password = $('#input_password').val();
-    if(input_email == "") {
-      $('#errMsgUser').text('メールアドレスが入力されていません。');
-      is_status = false;
+  //ログイン状態の場合ログイン後のページにリダイレクト
+  require_unlogined_session();
+  if($_SERVER['REQUEST_METHOD'] != 'POST') {
+    $message = "";
+  }
+  else {
+    //メールアドレスまたはパスワードが送信されて来なかった場合
+    $is_pass = true;
+    $email =$_POST['email'];
+    $password=$_POST['password'];
+    if(empty($email)) {
+      $messageEmail = "メールアドレスを入力してください。";
+      $is_pass = false;
     }
-    if(input_password == "") {
-      $('#errMsgPw').text('パスワードが入力されていません');
-      is_status = false;
+    if(empty($password)) {
+      $messagePw = "パスワードを入力してください。";
+      $is_pass = false;
     }
-    if(is_status) {
-      $.ajax({
-      type: 'POST',
-      url: 'action.php?action=login',
-      data: 'email=' + $('#input_email').val() + '&password=' + $('#input_password').val(),
-    }).done((response) => {
-      if(!response) {
-        alert('ユーザが見つかりませんでした。');
-      } else {
-        const responseObj = decodeJson(response);
-        alert("ユーザが見つかりました。");
-        console.log(responseObj);
+    //メールアドレスとパスワードが送信されて来た場合
+    if($is_pass) {
+      //post送信されてきたメールアドレスがデータベースにあるか検索
+      try {
+        $loginQuery = "SELECT * FROM users WHERE email=:email";
+        $stmt = $dbh->prepare($loginQuery);
+        $stmt->bindValue(":email", $email);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
       }
-    }).fail((xhr) =>  {
-      console.log('login fail');
-      alert('login fail');
-    }).always((xhr, msg) => {
-      console.log(xhr);
-      console.log(msg);
-    });
+      catch (PDOException $e) {
+        exit('データベースエラー');
+      }
+      //検索したユーザー名に対してパスワードが正しいかを検証
+    //正しくないとき
+    if (!password_verify($password, $result['password'])) {
+      $message="メールアドレスかパスワードが違います";      $messageAlert='ログインに失敗しました。';
+      $_SESSION['messageAlert'] = h($messageAlert);
+      header('Location: /?page=login');
     }
+    //正しいとき
+    else {
+      session_regenerate_id(TRUE); //セッションidを再発行
+      $_SESSION['userID'] = $_POST['email']; //セッションにログイン情報を登録
+      $messageAlert='ログインに成功しました。';
+      $_SESSION['messageAlert'] = h($messageAlert);
+      // header('Location: /?page=login');
+      header('Location: /');//ログイン後のページにリダイレクト
+      exit();
+    }
+  }
+}
+$message = h($message);
+$messageEmail = h($messageEmail);
+$messagePw = h($messagePw);
+
+?>
+<script>
+//パスワードの可視化と不可視化
+$(()=> {
+  $('#eye-icon').on('click',() => {
+    const input = $('#input_password');
+    if (input.attr('type') == 'password') {
+      input.attr('type','text');
+    } else {
+      input.attr('type','password');
+    }
+    $('#eye-icon').toggleClass('fa-eye');
+    $('#eye-icon').toggleClass('fa-eye-slash');
   });
 });
 </script>
 
+<div id="login_all_contents">
+  <h2>ログイン</h2>
+  <div id="login">
+    <div id="sns_contents">
+      <h3>SNSアカウントでログイン</h3>
+    </div>
+    <div id="login_contents">
+      <div class="message"><?php echo $message;?></div>
+      <form action=?page=login method=POST>
+        <div class="message"><?php echo $messageEmail;?></div>
+        <input id="input_email" class="loginForm_input_email" name="email" type="text" placeholder="メールアドレスを入力して下さい">
+        <div id="pwBox">
+          <div class="message"><?php echo $messagePw;?></div>
+          <input id="input_password" class="loginForm_input_pw" name="password" type="password" placeholder="パスワードを入力して下さい"><i id="eye-icon"class="fas fa-eye"></i>
+        </div>
 
-
-
+        <button id="loginBtn">ログイン</button>
+      </form>
+    </div>
+  </div>
+</div>
 

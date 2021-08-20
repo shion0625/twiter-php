@@ -1,10 +1,27 @@
+<?php
+session_start();
+$msgAlert = $_SESSION['messageAlert'];
+echo $_SESSION['messageAlert'];
+$_SESSION['messageAlert'] = '';
+?>
+
+<script>
+function alert_animation() {
+  console.log('alert');
+  $('#msg_alert').fadeIn(2000);
+  setInterval(() => {
+    $('#msg_alert').fadeOut(2000);
+      }, 7000);
+};
+</script>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../assets/css/style.min.css">
+    <!-- <link rel="stylesheet" href="../assets/css/style.min.css"> -->
+    <link rel="stylesheet" href="../assets/css/style.css">
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 
     <script
@@ -16,6 +33,16 @@
   <body>
     <header>
       <div id="header">
+        <?php if(!empty($msgAlert)): ?>
+          <div id="msg_alert">
+            <script type="text/javascript">
+              alert_animation();
+            </script>
+            <?php echo $msgAlert;
+            $msgAlert = '';
+            ?>
+          </div>
+        <?php endif; ?>
         <div id="header_logo">
           <h1>twitter</h1>
         </div>
@@ -27,14 +54,23 @@
           </nav>
         </div>
         <div id="header_signUp">
+        <?php if(!isset($_SESSION['userID'])) :?>
           <a href="?page=signUp" class="btn btn-flat"><span>会員登録</span></a>
+        <?php endif; ?>
         </div>
         <div id="header_right">
           <div id="header_login">
-            <a href="?page=login" alt="ログインボタン"><i class="fas fa-door-open"></i>
+            <?php if(isset($_SESSION['userID'])) :?>
+            <a href="action.php?action=logout" alt="ログアウトボタン">
+              <!-- <i class="fas fa-door-open"></i> -->
             <i class="fas fa-door-closed"></i>
-            <p>ログイン</p>
+            <p>ログアウト</p>
           </a>
+          <?php else :?>
+            <a href="?page=login" alt="ログインボタン"><i class="fas fa-door-open"></i>
+            <!-- <i class="fas fa-door-closed"></i> -->
+            <p>ログイン</p>
+          <?php endif; ?>
           </div>
           <div id="header_menu">
             <div id="menu_bar">
@@ -75,17 +111,4 @@ $(() => {
     }
   });
 });
-//ログインの場合と違う場合で画像が変わる
-//ログイン後と前で画像を変える。
-$(() => {
-  let param = $(location).attr('search');
-  const locate = param.split('page=')[1];
-  if(locate == 'login') {
-    $('.fa-door-open').hide();
-    $('.fa-door-closed').show();
-  } else {
-    $('.fa-door-open').show();
-    $('.fa-door-closed').hide();
-  }
-})
 </script>

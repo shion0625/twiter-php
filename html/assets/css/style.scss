@@ -27,7 +27,7 @@ body {
       display:flex;
       align-items: center;
       justify-content: space-around;
-      box-shadow: 0rem 0.2rem 0.5rem 0rem rgb(0 0 0 / 10%);
+      // box-shadow: 0rem 0.2rem 0.5rem 0rem rgb(0 0 0 / 10%);
       #header_logo {
         h1 {
           color: blue;
@@ -220,7 +220,24 @@ body {
       }
     }
   }
-
+/////////////////////////////////////////////////
+  #msg_alert {
+    height: 5rem;
+    line-height: 5rem;
+    font-size: 3rem;
+    width: 100%;
+    margin: 0;
+    display: none;
+    text-align: center;
+    color: wheat;
+    background-color: dimgrey;
+    opacity: 0.55;
+    border: 0.1rem solid #aaa;
+    box-shadow: 0.2rem 0.2rem 0.4rem #888;
+    z-index: 100;
+    position: absolute;
+    top: 0;
+  }
   #signUp_all_contents {
     margin: 2rem auto;
     display: flex;
@@ -249,37 +266,110 @@ body {
         border-radius: 1rem;
         width: 90%;
         margin: 1rem auto;
-        .require {
-          border:1px solid #ffc1c6;
-          color: #f23363;
+        form {
+          .require {
+            border:1px solid #ffc1c6;
+            color: #f23363;
+          }
+          .require_pos{
+            display: flex;
+            justify-content: space-between;
+          }
+          .box_setting {
+            width: 90%;
+            margin: auto;
+            padding:1rem 0;
+          }
+          .errMsg {
+            color: red;
+          }
+          input {
+            margin: 0 5%;
+            padding: 0 0 0 2.6rem;
+            height: 4rem;
+            width: 90%;
+          }
+          #input_username {
+            background: url(../icon/user.png) no-repeat #64a1e7 5px center;
+          }
+          #input_email {
+            background: url(../icon/mail.png) no-repeat #64a1e7 5px center;
+          }
+          #input_password {
+            background: url(../icon/key.png) no-repeat #64a1e7 5px center;
+          }
+          input::placeholder {
+            color: rgb(143, 168, 236);
+            font-size: 1.2rem;
+          }
+          #password_box {
+            position: relative;
+            #eye-icon {
+              position: absolute;
+              top: 37%;
+              right: 8%;
+            z-index: 10;
+            }
+          }
+          #signUpBtn {
+            display: block;
+            margin: 2rem auto;
+          }
         }
-        .require_pos{
-          display: flex;
-          justify-content: space-between;
+      }
+    }
+  }
+  #login_all_contents{
+    #login {
+      background: linear-gradient(25deg, rgba(175, 223, 238, 0.4), rgba(180, 173, 240, 0.4)) ,url(../img/bokeh-2072271_1920.jpg);
+      background-size: cover;
+      background-repeat:  no-repeat;
+      background-position: center;
+      display: flex;
+      justify-content: center;
+      border-radius: 2rem;
+      margin: 10% 5%;
+      padding: 5% 0;
+    }
+    #sns_contents {
+      width: 45%;
+      background-color: brown;
+      margin-right: 3%;
+    }
+    #login_contents {
+      width: 45%;
+      font-size: 1.4rem;
+      background-color: cadetblue;
+      form {
+        margin: 2% 0;
+        .loginForm_input_email {
+          background: url(../icon/mail.png) no-repeat #ffc1c6 5px center;
         }
-        .box_setting {
+        .loginForm_input_pw {
+          background: url(../icon/key.png) no-repeat #ffc1c6 5px center;
+        }
+        input {
+          margin: 0 5%;
+          padding: 0 0 0 2.6rem;
+          height: 4rem;
           width: 90%;
-          margin: auto;
-          padding:1rem 0;
         }
-        .errMsg {
-          color: red;
+        #loginBtn {
+          text-align: center;
+          margin: 2% 5% 0 5%;
         }
         input::placeholder {
           color: rgb(143, 168, 236);
           font-size: 1.2rem;
         }
-        #password_box {
+        #pwBox {
           position: relative;
-          #eye_icon {
+          #eye-icon {
             position: absolute;
-            right: 1rem;
-            top: 0.5rem;
+            top: 30%;
+            right: 8%;
+            z-index: 10;
           }
-        }
-        #signUpBtn {
-          display: block;
-          margin: 2rem auto;
         }
       }
     }
