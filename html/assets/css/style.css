@@ -359,6 +359,10 @@ body #signUp_all_contents #signUp_contents #signUp_main form input {
   width: 90%;
 }
 
+body #signUp_all_contents #signUp_contents #signUp_main form #input_username {
+  background: url(../icon/user.png) no-repeat #64a1e7 5px center;
+}
+
 body #signUp_all_contents #signUp_contents #signUp_main form #input_email {
   background: url(../icon/mail.png) no-repeat #64a1e7 5px center;
 }
@@ -479,14 +483,6 @@ body #login_all_contents #login_contents form #pwBox {
   position: relative;
 }
 
-body #login_all_contents #login_contents form #pwBox #eye-icon {
-  position: absolute;
-  top: 30%;
-  right: 8%;
-  z-index: 10;
-}
-/*# sourceMappingURL=style.css.map */relative;
-}
 body #login_all_contents #login_contents form #pwBox #eye-icon {
   position: absolute;
   top: 30%;
