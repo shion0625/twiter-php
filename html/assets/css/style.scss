@@ -222,6 +222,8 @@ body {
   }
 /////////////////////////////////////////////////
   #msg_alert {
+    display: inline-block;
+    pointer-events: none;
     height: 5rem;
     line-height: 5rem;
     font-size: 3rem;

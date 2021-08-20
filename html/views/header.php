@@ -69,9 +69,10 @@ function alert_animation() {
             <p>ログアウト</p>
           </a>
           <?php else :?>
-            <a href="?page=login" alt="ログインボタン"><i class="fas fa-door-open"></i>
+          <a href="?page=login" alt="ログインボタン"><i class="fas fa-door-open"></i>
             <!-- <i class="fas fa-door-closed"></i> -->
             <p>ログイン</p>
+          </a>
           <?php endif; ?>
           </div>
           <div id="header_menu">

@@ -269,6 +269,8 @@ body header #header #header_right #header_menu .nav-sp.slide {
 }
 
 body #msg_alert {
+  display: inline-block;
+  pointer-events: none;
   height: 5rem;
   line-height: 5rem;
   font-size: 3rem;
@@ -483,6 +485,12 @@ body #login_all_contents #login_contents form #pwBox {
   position: relative;
 }
 
+body #login_all_contents #login_contents form #pwBox #eye-icon {
+  position: absolute;
+  top: 30%;
+  right: 8%;
+  z-index: 10;
+}
 body #login_all_contents #login_contents form #pwBox #eye-icon {
   position: absolute;
   top: 30%;
