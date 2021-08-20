@@ -1,3 +1,19 @@
+<?php
+session_start();
+$msgAlert = $_SESSION['messageAlert'];
+echo $_SESSION['messageAlert'];
+$_SESSION['messageAlert'] = '';
+?>
+
+<script>
+function alert_animation() {
+  console.log('alert');
+  $('#msg_alert').fadeIn(2000);
+  setInterval(() => {
+    $('#msg_alert').fadeOut(2000);
+      }, 7000);
+};
+</script>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,6 +33,16 @@
   <body>
     <header>
       <div id="header">
+        <?php if(!empty($msgAlert)): ?>
+          <div id="msg_alert">
+            <script type="text/javascript">
+              alert_animation();
+            </script>
+            <?php echo $msgAlert;
+            $msgAlert = '';
+            ?>
+          </div>
+        <?php endif; ?>
         <div id="header_logo">
           <h1>twitter</h1>
         </div>

@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/../function.php';
-session_start();
+// session_start();
 
   //ログイン状態の場合ログイン後のページにリダイレクト
   require_unlogined_session();
@@ -36,12 +36,17 @@ session_start();
       //検索したユーザー名に対してパスワードが正しいかを検証
     //正しくないとき
     if (!password_verify($password, $result['password'])) {
-      $message="メールアドレスかパスワードが違います";
+      $message="メールアドレスかパスワードが違います";      $messageAlert='ログインに失敗しました。';
+      $_SESSION['messageAlert'] = h($messageAlert);
+      header('Location: /?page=login');
     }
     //正しいとき
     else {
       session_regenerate_id(TRUE); //セッションidを再発行
       $_SESSION['userID'] = $_POST['email']; //セッションにログイン情報を登録
+      $messageAlert='ログインに成功しました。';
+      $_SESSION['messageAlert'] = h($messageAlert);
+      // header('Location: /?page=login');
       header('Location: /');//ログイン後のページにリダイレクト
       exit();
     }
@@ -50,6 +55,7 @@ session_start();
 $message = h($message);
 $messageEmail = h($messageEmail);
 $messagePw = h($messagePw);
+
 ?>
 <script>
 //パスワードの可視化と不可視化

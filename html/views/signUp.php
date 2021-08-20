@@ -1,6 +1,5 @@
 <?php
 require_once __DIR__ . '/../function.php';
-
 $regexpEm = '/^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/';
 $regexpPw = '/^(?=.*[A-Z])(?=.*[.?\/-])[a-zA-Z0-9.?\/-]{8,24}$/';
 require_unlogined_session();
@@ -54,6 +53,9 @@ else {
       echo 8;
       //検索して同じメールアドレスが使用されていた！
       $messageAlert = "そのメールアドレスは使用されています。";
+      $_SESSION['messageAlert'] = h($messageAlert);
+      header("Location: /?page=signUp");
+      exit();
     } else {
       echo 9;
       //データベースにユーザの登録を行う!
@@ -71,10 +73,15 @@ else {
       if($flag) {
         echo 'a';
         $messageAlert = "ユーザの登録に成功しました。";
+        $_SESSION['messageAlert'] = h($messageAlert);
         header('Location: /?page=login');
+        exit();
       } else {
         echo 'b';
-        $messageAlert = "ユーザの登録に失敗しました。";
+        $messageAlert = "ユーザの登録に失敗しました。もう一度お願いします。";
+        $_SESSION['messageAlert'] = h($messageAlert);
+        header("Location: /?page=signUp");
+        exit();
       }
     }
   }
@@ -84,7 +91,6 @@ $message = h($message);
 $messageUser = h($messageUser);
 $messageEmail = h($messageEmail);
 $messagePw = h($messagePw);
-$messageAlert = h($messageAlert);
 ?>
 
 <script>
@@ -102,24 +108,8 @@ $(()=> {
   });
 });
 
-function alert_animation() {
-  console.log('alert');
-  $('#msg_alert').fadeIn(2000);
-  setInterval(() => {
-    $('#msg_alert').fadeOut(2000);
-      }, 7000);
-};
-
 </script>
 
-<?php if(!empty($messageAlert)): ?>
-  <div id="msg_alert">
-  <script type="text/javascript">
-    alert_animation();
-  </script>
-  <?php echo $messageAlert;?>
-  </div>
-<?php endif; ?>
 <div id="signUp_all_contents">
   <div id="sns_contents">
     <h2>SNSアカウントで会員登録</h2>
