@@ -1,7 +1,5 @@
 <?php
 session_start();
-print_r(session_id());
-print_r($_SESSION['userID']);
 $dsn = 'mysql:host=mysql;dbname=test;charset=utf8';
 $user = 'root';
 $password = 'root';

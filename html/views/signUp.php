@@ -6,40 +6,32 @@ require_unlogined_session();
 print_r($_SERVER['REQUEST_METHOD']);
 
 if($_SERVER['REQUEST_METHOD'] != 'POST') {
-  echo 's';
   $message = "";
 }
 else {
-  echo 1;
   $is_pass = true;
   $username = $_POST['username'];
   $password = $_POST['password'];
   $email = $_POST['email'];
   if(empty($username)) {
-    echo 2;
     $messageUser = "ユーザ名を入力してください。";
     $is_pass = false;
   }
   if (empty($email)) {
-    echo 3;
     $messageEmail = "メールアドレスを入力してください。";
     $is_pass = false;
   } else if(!preg_match($regexpEm, $email)) {
-    echo 4;
     $messageEmail = "メールアドレスを正しく入力してください。";
     $is_pass = false;
   }
   if(empty($password)) {
-    echo 5;
     $messagePw = "パスワードを入力してください。";
     $is_pass = false;
   } else if(!preg_match($regexpPw, $password)) {
-    echo 6;
     $messagePw = "パスワードを正しく入力してください。";
     $is_pass = false;
   }
   if($is_pass) {
-    echo 7;
     try {
       $query = "SELECT * FROM users WHERE email=:email";
       $stmt = $dbh->prepare($query);
@@ -50,14 +42,12 @@ else {
       exit('データベースエラー');
     }
     if($result) {
-      echo 8;
       //検索して同じメールアドレスが使用されていた！
       $messageAlert = "そのメールアドレスは使用されています。";
       $_SESSION['messageAlert'] = h($messageAlert);
       header("Location: /?page=signUp");
       exit();
     } else {
-      echo 9;
       //データベースにユーザの登録を行う!
       try{
         $query = "INSERT INTO users (user_name, password, email) VALUES (:username, :password, :email)";
@@ -67,17 +57,14 @@ else {
         $stmt->bindValue(":email", $email);
         $flag = $stmt->execute();
       }catch (PDOException $e) {
-        echo "$e";
         exit('データベースエラー');
       }
       if($flag) {
-        echo 'a';
         $messageAlert = "ユーザの登録に成功しました。";
         $_SESSION['messageAlert'] = h($messageAlert);
         header('Location: /?page=login');
         exit();
       } else {
-        echo 'b';
         $messageAlert = "ユーザの登録に失敗しました。もう一度お願いします。";
         $_SESSION['messageAlert'] = h($messageAlert);
         header("Location: /?page=signUp");
@@ -86,7 +73,6 @@ else {
     }
   }
 }
-echo 'c';
 $message = h($message);
 $messageUser = h($messageUser);
 $messageEmail = h($messageEmail);
