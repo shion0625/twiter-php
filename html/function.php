@@ -1,8 +1,18 @@
 <?php
+
+require './vendor/autoload.php';
+
+// .envを使用する
+$dotenv = Dotenv\Dotenv::createUnsafeImmutable(__DIR__);
+$dotenv->load();
+
 session_start();
-$dsn = 'mysql:host=mysql;dbname=test;charset=utf8';
-$user = 'root';
-$password = 'root';
+$dsn = getenv('DB_DSN');
+$user = getenv('DB_USER');
+$password = getenv('DB_PASSWORD');
+// $dsn = 'mysql:host=mysql;dbname=test;charset=utf8';
+// $user = 'root';
+// $password = 'root';
 $options = array(
   PDO::MYSQL_ATTR_INIT_COMMAND=>"SET CHARACTER SET 'utf8'",
   PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,

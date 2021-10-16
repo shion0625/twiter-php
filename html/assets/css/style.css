@@ -491,10 +491,4 @@ body #login_all_contents #login_contents form #pwBox #eye-icon {
   right: 8%;
   z-index: 10;
 }
-body #login_all_contents #login_contents form #pwBox #eye-icon {
-  position: absolute;
-  top: 30%;
-  right: 8%;
-  z-index: 10;
-}
 /*# sourceMappingURL=style.css.map */
