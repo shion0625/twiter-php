@@ -1,4 +1,9 @@
 <?php
+require './vendor/autoload.php';
+// .envを使用する
+$dotenv = Dotenv\Dotenv::createUnsafeImmutable(__DIR__);
+$dotenv->load();
+
 // include ( __DIR__ . '/assets/lib/ChromePhp.php');
 include ( __DIR__ . '/function.php');
 include ( __DIR__ . '/views/header.php');

@@ -1,11 +1,5 @@
 <?php
 
-require './vendor/autoload.php';
-
-// .envを使用する
-$dotenv = Dotenv\Dotenv::createUnsafeImmutable(__DIR__);
-$dotenv->load();
-
 session_start();
 $dsn = getenv('DB_DSN');
 $user = getenv('DB_USER');
