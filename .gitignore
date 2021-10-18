@@ -3,3 +3,4 @@ vendor
 docker-compose.yml
 php
 mysql
+.DS_Store
