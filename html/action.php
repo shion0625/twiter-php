@@ -9,6 +9,7 @@ if(!isset($_GET['action'])) {
 }else if($_GET['action'] == 'logout') {
     // $regexpEm = '/^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/';
     // $regexpPw = '/^(?=.*[A-Z])(?=.*[.?\/-])[a-zA-Z0-9.?\/-]{8,24}$/';
+  echo 'logout';
   session_unset();
   session_destroy();
   header('Location: /views/logout.php');

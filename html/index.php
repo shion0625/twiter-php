@@ -6,6 +6,7 @@ $dotenv->load();
 
 // include ( __DIR__ . '/assets/lib/ChromePhp.php');
 include ( __DIR__ . '/function.php');
+// include(__DIR__. '/action.php');
 include ( __DIR__ . '/views/header.php');
   if($_GET['page'] == 'login') {
     include ( __DIR__ . '/views/login.php');
@@ -13,7 +14,9 @@ include ( __DIR__ . '/views/header.php');
     include ( __DIR__ . '/views/signUp.php');
   } else if($_GET['page'] == 'menu') {
     include ( __DIR__ . '/views/menu.php');
-  }
+  } else if($_GET['page'] == 'logout') {
+		include(__DIR__ . '/views/logout.php');
+	}
   // 	include("views/timeline.php");
 
 	// } else if($_GET['page'] == 'yourtweets') {

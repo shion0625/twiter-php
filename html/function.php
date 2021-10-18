@@ -28,12 +28,13 @@ try {
  * @param string $str
  * @return string
  */
-function h($str)
+function fun_h($str)
 {
     return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
 }
 
-function require_unlogined_session() {
+//すでにログインしている場合（ログインページの場合）
+function fun_require_unlogined_session() {
   if (isset($_SESSION['userID'])) {
     session_regenerate_id(TRUE);
     header("Location: /");
@@ -41,8 +42,8 @@ function require_unlogined_session() {
   exit();
   }
 }
-
-// function require_logined_session() {
+//まだログインしているかの判別
+// function fun_require_logined_session() {
   // session_regenerate_id(TRUE);
 //   if (!isset($_SESSION['userID'])) {
 //     header('Location: /?page=login');
@@ -55,7 +56,7 @@ function require_unlogined_session() {
  *
  * @return string トークン
  */
-function generate_token()
+function fun_generate_token()
 {
     // セッションIDからハッシュを生成
     return hash('sha256', session_id());
@@ -67,9 +68,9 @@ function generate_token()
  * @param string $token
  * @return bool 検証結果
  */
-function validate_token($token)
+function fun_validate_token($token)
 {
     // 送信されてきた$tokenがこちらで生成したハッシュと一致するか検証
-    return $token === generate_token();
+    return $token === fun_generate_token();
 }
 ?>

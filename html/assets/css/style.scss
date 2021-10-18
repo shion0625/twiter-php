@@ -28,7 +28,7 @@ body {
       align-items: center;
       justify-content: space-around;
       // box-shadow: 0rem 0.2rem 0.5rem 0rem rgb(0 0 0 / 10%);
-      #header_logo {
+      .header-logo {
         h1 {
           color: blue;
           font-size: 3.2rem;
@@ -36,13 +36,13 @@ body {
         margin-right: 3%;
       }
 
-      #header_nav {
+      .header-nav {
         nav {
           height: 100%;
           display:flex;
           align-items: center;
           justify-content: space-between;
-          .header_item {
+          .header-item {
             font-size: 2rem;
             margin-right: 1rem;
             white-space: nowrap;
@@ -50,7 +50,7 @@ body {
         }
       }
 // 会員登録ボタンのデコレーション
-      #header_signUp {
+      .header-signup {
         margin:0.5rem 1rem 0.5rem 0rem;
         height: 94%;
         a.btn {
@@ -121,11 +121,11 @@ body {
         }
       }
 
-      #header_right {
+      .header-right {
         display: flex;
         height: 6rem;
         // ログインボタン
-        #header_login {
+        .header-login {
           margin: 0 2rem 0 0;
           text-align: center;
           a{
@@ -143,10 +143,10 @@ body {
             }
           }
         }
-        #header_menu {
+        .header-menu {
           margin: auto 0;
           height: 5rem;
-          #menu_bar {
+          .menu-bar {
             p {
               margin: 0;
             }
@@ -157,36 +157,37 @@ body {
               height: 3.2rem;
               cursor: pointer;
               z-index: 10;
+
+              .hamburger-menu__line{
+                display: block;
+                width: 100%;
+                height: 0.4rem;
+                border-radius: 0.4rem;
+                background-color: #000;
+                position: relative;
+                transition: all 0.5s;
+              }
+
+              .hamburger-menu__line::before,
+              .hamburger-menu__line::after{
+                content: '';
+                display: block;
+                width: 100%;
+                height: 0.4rem;
+                border-radius: 0.4rem;
+                background-color: black;
+                position: absolute;
+                transition: all 0.5s;
+              }
+
+              .hamburger-menu__line::before{
+                transform: translateY(-1.2rem);
+              }
+              .hamburger-menu__line::after{
+                transform: translateY(1.2rem);
+              }
             }
 
-            .hamburger-menu__line{
-              display: block;
-              width: 100%;
-              height: 0.4rem;
-              border-radius: 0.4rem;
-              background-color: #000;
-              position: relative;
-              transition: all 0.5s;
-            }
-
-            .hamburger-menu__line::before,
-            .hamburger-menu__line::after{
-              content: '';
-              display: block;
-              width: 100%;
-              height: 0.4rem;
-              border-radius: 0.4rem;
-              background-color: black;
-              position: absolute;
-              transition: all 0.5s;
-            }
-
-            .hamburger-menu__line::before{
-              transform: translateY(-1.2rem);
-            }
-            .hamburger-menu__line::after{
-              transform: translateY(1.2rem);
-            }
             .hamburger-menu.open .hamburger-menu__line{
               background-color: transparent;
             }
@@ -221,7 +222,7 @@ body {
     }
   }
 /////////////////////////////////////////////////
-  #msg_alert {
+  .msg-alert {
     display: inline-block;
     pointer-events: none;
     height: 5rem;
@@ -240,7 +241,7 @@ body {
     position: absolute;
     top: 0;
   }
-  #signUp_all_contents {
+  .signUp-all-contents {
     margin: 2rem auto;
     display: flex;
     width: 95%;
@@ -254,16 +255,16 @@ body {
       text-align: center;
     }
     justify-content: center;
-    #sns_contents {
+    .sns-contents {
       background-color: #f1f4f4;
       width: 45%;
       margin: 1rem;
     }
-    #signUp_contents {
+    .signUp-contents {
       background-color: #f1f4f4;
       width: 45%;
       margin: 1rem;
-      #signUp_main {
+      .signup-main {
         background-color: white;
         border-radius: 1rem;
         width: 90%;
@@ -273,11 +274,11 @@ body {
             border:1px solid #ffc1c6;
             color: #f23363;
           }
-          .require_pos{
+          .require-pos{
             display: flex;
             justify-content: space-between;
           }
-          .box_setting {
+          .box-setting {
             width: 90%;
             margin: auto;
             padding:1rem 0;
@@ -304,7 +305,7 @@ body {
             color: rgb(143, 168, 236);
             font-size: 1.2rem;
           }
-          #password_box {
+          .password-box {
             position: relative;
             #eye-icon {
               position: absolute;
@@ -313,7 +314,7 @@ body {
             z-index: 10;
             }
           }
-          #signUpBtn {
+          .signup-btn {
             display: block;
             margin: 2rem auto;
           }
@@ -321,8 +322,8 @@ body {
       }
     }
   }
-  #login_all_contents{
-    #login {
+  .login-all-contents{
+    .login-box {
       background: linear-gradient(25deg, rgba(175, 223, 238, 0.4), rgba(180, 173, 240, 0.4)) ,url(../img/bokeh-2072271_1920.jpg);
       background-size: cover;
       background-repeat:  no-repeat;
@@ -333,21 +334,21 @@ body {
       margin: 10% 5%;
       padding: 5% 0;
     }
-    #sns_contents {
+    .sns-contents {
       width: 45%;
       background-color: brown;
       margin-right: 3%;
     }
-    #login_contents {
+    .login-contents {
       width: 45%;
       font-size: 1.4rem;
       background-color: cadetblue;
       form {
         margin: 2% 0;
-        .loginForm_input_email {
+        .login-form-input-email {
           background: url(../icon/mail.png) no-repeat #ffc1c6 5px center;
         }
-        .loginForm_input_pw {
+        .login-form-input-pw {
           background: url(../icon/key.png) no-repeat #ffc1c6 5px center;
         }
         input {
@@ -356,7 +357,7 @@ body {
           height: 4rem;
           width: 90%;
         }
-        #loginBtn {
+        .login-btn {
           text-align: center;
           margin: 2% 5% 0 5%;
         }

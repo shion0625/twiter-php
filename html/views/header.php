@@ -1,18 +1,14 @@
 <?php
 session_start();
-$msgAlert = $_SESSION['messageAlert'];
-echo $_SESSION['messageAlert'];
-$_SESSION['messageAlert'] = '';
-echo $_SESSION;
-echo session_id();
+print_r($_SESSION);
 ?>
 
 <script>
 function alert_animation() {
   console.log('alert');
-  $('#msg_alert').fadeIn(2000);
+  $('#msgAlert').fadeIn(2000);
   setInterval(() => {
-    $('#msg_alert').fadeOut(2000);
+    $('#msgAlert').fadeOut(2000);
       }, 7000);
 };
 </script>
@@ -35,35 +31,35 @@ function alert_animation() {
   <body>
     <header>
       <div id="header">
-        <?php if(!empty($msgAlert)): ?>
-          <div id="msg_alert">
+        <?php if(!empty($_SESSION['messageAlert'])):?>
+          <div class="msg-alert" id="msgAlert">
             <script type="text/javascript">
               alert_animation();
             </script>
-            <?php echo $msgAlert;
-            $msgAlert = '';
+            <?php echo $_SESSION['messageAlert'];
+            $_SESSION['messageAlert'] = '';
             ?>
           </div>
         <?php endif; ?>
-        <div id="header_logo">
+        <div class="header-logo">
           <h1>twitter</h1>
         </div>
-        <div id="header_nav">
+        <div class="header-nav">
           <nav>
-            <div class="header_item">あなたのタイムライン</div>
-            <div class="header_item">あなたのツイート</div>
-            <div class="header_item">あなたのプロフィール</div>
+            <div class="header-item">あなたのタイムライン</div>
+            <div class="header-item">あなたのツイート</div>
+            <div class="header-item">あなたのプロフィール</div>
           </nav>
         </div>
-        <div id="header_signUp">
+        <div class="header-signup">
         <?php if(!isset($_SESSION['userID'])) :?>
           <a href="?page=signUp" class="btn btn-flat"><span>会員登録</span></a>
         <?php endif; ?>
         </div>
-        <div id="header_right">
-          <div id="header_login">
+        <div class="header-right">
+          <div class="header-login">
             <?php if(isset($_SESSION['userID'])) :?>
-            <a href="action.php?action=logout" alt="ログアウトボタン">
+            <a href="?page=logout" alt="ログアウトボタン">
               <!-- <i class="fas fa-door-open"></i> -->
             <i class="fas fa-door-closed"></i>
             <p>ログアウト</p>
@@ -75,8 +71,8 @@ function alert_animation() {
           </a>
           <?php endif; ?>
           </div>
-          <div id="header_menu">
-            <div id="menu_bar">
+          <div class="header-menu">
+            <div class="menu-bar">
               <div class="hamburger-menu">
                 <span class="hamburger-menu__line"></span>
               </div>
