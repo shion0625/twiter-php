@@ -103,7 +103,7 @@ $(()=> {
   <div class="signup-contents">
     <h2>会員登録</h2>
     <div class="signup-main">
-      <form action="?page=signUp" method="post">
+      <form action="?page=signUp" method=POST>
         <div><?php echo $message;?></div>
         <div class="box-setting">
           <p class="require-pos"><label for="input_username">ユーザ名:</label><span class="require">必須</span></p>

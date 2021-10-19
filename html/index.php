@@ -30,11 +30,10 @@ include ( __DIR__ . '/views/header.php');
 	// } else if($_GET['page'] == 'profiles') {
 
 	// 	include("views/profiles.php");
-	// } else {
-
-	// 	include("views/home.php");
-
 	// }
+	else {
+		include(__DIR__ .'/views/home.php');
+	}
 	include("views/footer.php");
 
 ?>
