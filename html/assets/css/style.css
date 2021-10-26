@@ -278,8 +278,23 @@ body .main-all-contents .popup .popup-inner {
   background-color: #fff;
   z-index: 2;
 }
-body .main-all-contents .popup .popup-inner img {
+body .main-all-contents .popup .popup-inner .tweet-form .tweet-textarea {
   width: 100%;
+  height: 90%;
+  padding: 5px;
+  border: 1px solid;
+  border-bottom: 0px;
+  resize: none;
+}
+body .main-all-contents .popup .popup-inner .tweet-form .tweet-items {
+  border: 1px solid;
+  border-top: 0px;
+  margin: 0px;
+  padding: 10px 0;
+}
+body .main-all-contents .popup .popup-inner .tweet-form .tweet-items .tweet-item {
+  font-size: 16px;
+  margin-left: 8px;
 }
 body .main-all-contents .popup .popup-inner .close-btn {
   position: absolute;

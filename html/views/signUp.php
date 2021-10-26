@@ -5,7 +5,7 @@ $regexp_pw = '/^(?=.*[A-Z])(?=.*[.?\/-])[a-zA-Z0-9.?\/-]{8,24}$/';
 fun_require_unlogined_session();
 
 if($_SERVER['REQUEST_METHOD'] != 'POST') {
-  $message = "";
+  $message = "無効なメソッドでのそうしんです。";
 }
 else {
   $is_pass = true;
@@ -111,13 +111,23 @@ $(()=> {
           <input type="text" id="input_username" name="username"placeholder="ユーザー名を入力してください" spellcheck="true">
         </div>
         <div class="box-setting">
-          <p class="require-pos"><label for="input_email">メールアドレス:</label><span class="require">必須</span></p>
-          <div class="errMsg"><?php echo $message_email?></div>
+          <p class="require-pos">
+            <label for="input_email">メールアドレス:</label>
+            <span class="require">必須</span>
+          </p>
+          <div class="errMsg">
+            <?php echo $message_email?>
+          </div>
           <input type="email" id="input_email" name="email" placeholder="メールアドレスを入力してください">
         </div>
         <div class="box-setting">
-          <p class="require-pos"><label for="inputPassword">パスワード</label><span class="require">必須</span></p>
-          <div class="errMsg"><?php echo $message_pw;?></div>
+          <p class="require-pos">
+            <label for="inputPassword">パスワード</label>
+            <span class="require">必須</span>
+          </p>
+          <div class="errMsg">
+            <?php echo $message_pw;?>
+          </div>
           <div class="password-box">
             <input type="password" id="inputPassword" name="password" placeholder="パスワードを入力して下さい">
             <i id="eye-icon"class="fas fa-eye"></i>
