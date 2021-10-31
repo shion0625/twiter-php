@@ -1,30 +1,38 @@
 <?php
 require_once __DIR__ . '/../function.php';
+require  __DIR__ . '/../db_function.php';
 
-if($_SERVER['REQUEST_METHOD'] != 'POST') {
-  $message="無効なメソッドでの送信です。";
+if(isset($_SESSION['userID']) && $_SESSION['time'] + 3600 > time()) {
+  $_SESSION['time'] = time();
+  $result = db_user_details($dbh);
+  setcookie('username', fun_h($result['user_name']),time()+60*60*24*14);
 } else {
+  // header("Location: ?page=login");
+  // exit();
+}
+
+// if($_SERVER['REQUEST_METHOD'] != 'POST') {
+//   $message="無効なメソッドでの送信です。";
+// }
+if(!empty($_POST) && isset($_POST['send'])) {
   $user_id = $_SESSION['userID'];
   $date_time = date("Y-m-d H:i:s");
   $tweet_content = fun_h($_POST['tweet-content']);
-  try{
-    $query = "INSERT INTO tweet (user_id, date_time, tweet_content) VALUES (:user_id, :date_time, :tweet_content)";
-    $stmt = $dbh->prepare($query);
-    $stmt->bindValue(":user_id", $user_id);
-    $stmt->bindValue(":date_time", $date_time);
-    $stmt->bindValue(":tweet_content", $tweet_content);
-    $flag = $stmt->execute();
-  }catch (PDOException $e) {
-    echo "\n";
-    echo $e;
-    exit('データベースエラー');
-  }
+  $flag = db_insert_tweet($dbh, $user_id, $date_time, $tweet_content);
   if($flag) {
-    echo "登録に成功しました。";
+    $message_alert = "ツイートに成功しました。";
+    $_SESSION['messageAlert'] = fun_h($message_alert);
+    header("Location: {$_SERVER['PHP_SELF']}");
+    exit();
   } else {
-    echo "失敗しました。";
+    $message_alert = "ツイートに失敗しました。";
+    $_SESSION['messageAlert'] = fun_h($message_alert);
+    header("Location: {$_SERVER['PHP_SELF']}");
+    exit();
   }
 }
+
+$posts = db_get_tweets($dbh);
 ?>
 
 <script>
@@ -53,7 +61,7 @@ if($_SERVER['REQUEST_METHOD'] != 'POST') {
       <div class="close-btn" id="js-close-btn">
         <i class="fas fa-times"></i>
       </div>
-      <button class="tweet-submit-btn" form="tweet">ツイートする</button>
+      <button class="tweet-submit-btn" name="send" form="tweet">ツイートする</button>
         <form id="tweet" class="tweet-form" method=POST>
           <textarea class="tweet-textarea"name="tweet-content" cols="" rows="10" wrap= "soft"required ></textarea>
           <p class="tweet-items">
@@ -68,5 +76,19 @@ if($_SERVER['REQUEST_METHOD'] != 'POST') {
     </div>
     <div class="black-background" id="js-black-bg"></div>
   </div>
-</div>
+  <?php foreach($posts as $post):?>
+    <div class="post">
+        <p>
+          <img src="" alt="" width="24" height="24">          <span class="tweet-username">
+            <?php print(fun_h($post['user_name']))?>
+          </span></p>
+          <p><?php print(fun_h($post['tweet_content']))?></p>
+          <p>
+            <a href=""><?php print(fun_h($post['date_time']))?></a>
+            <a href="delete.php" style="color:F33;">削除</a>
+          </p>
 
+    </div>
+  <?php endforeach;?>
+
+</div>

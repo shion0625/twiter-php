@@ -1,16 +1,20 @@
 <?php
 require_once __DIR__ . '/../function.php';
+require  __DIR__ . '/../db_function.php';
 
   //ログイン状態の場合ログイン後のページにリダイレクト
   fun_require_unlogined_session();
-  if($_SERVER['REQUEST_METHOD'] != 'POST') {
+  // if(!empty($_COOKIE['auto_login'])) {
+
+  // }
+  if(isset($_POST['send'])) {
     $message = "";
   }
   else {
     //メールアドレスまたはパスワードが送信されて来なかった場合
     $is_pass = true;
-    $email =$_POST['email'];
-    $password=$_POST['password'];
+    $email = fun_h($_POST['email']);
+    $password= fun_h($_POST['password']);
     if(empty($email)) {
       $message_email = "メールアドレスを入力してください。";
       $is_pass = false;
@@ -22,16 +26,7 @@ require_once __DIR__ . '/../function.php';
     //メールアドレスとパスワードが送信されて来た場合
     if($is_pass) {
       //post送信されてきたメールアドレスがデータベースにあるか検索
-      try {
-        $login_query = "SELECT * FROM users WHERE email=:email";
-        $stmt = $dbh->prepare($login_query);
-        $stmt->bindValue(":email", $email);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-      }
-      catch (PDOException $e) {
-        exit('データベースエラー');
-      }
+      $result = db_login($dbh, $email);
       //検索したユーザー名に対してパスワードが正しいかを検証
     //正しくないとき
     if (!password_verify($password, $result['password'])) {
@@ -45,15 +40,15 @@ require_once __DIR__ . '/../function.php';
       session_regenerate_id(TRUE); //セッションidを再発行
       $_SESSION['userID'] = $result['email_encode']; //セッションにログイン情報を登録
       $_SESSION['messageAlert'] = fun_h('ログインに成功しました。');
+      $_SESSION['time'] = time();
+      // if($_POST['save'] == 'on') {
+      //   setcookie('auto_login', $result['email_encode'],time()+60*60*24*14);
+      // }
       header('Location: /');//ログイン後のページにリダイレクト
       exit();
     }
   }
 }
-$message = fun_h($message);
-$message_email = fun_h($message_email);
-$message_pw = fun_h($message_pw);
-
 ?>
 <script>
 //パスワードの可視化と不可視化
@@ -86,8 +81,11 @@ $(()=> {
           <div class="message"><?php echo $message_pw;?></div>
           <input id="input_password" class="login-form-input-pw" name="password" type="password" placeholder="パスワードを入力して下さい"><i id="eye-icon"class="fas fa-eye"></i>
         </div>
-
-        <button class="login-btn">ログイン</button>
+        <!-- <div>
+          <input id="save" type="checkbox" name="save" value="on">
+          <label for="save">次回から自動でログインする</label>
+        </div> -->
+        <button name="submit" class="login-btn">ログイン</button>
       </form>
     </div>
   </div>

@@ -1,6 +1,7 @@
 <?php
 session_start();
 print_r($_SESSION);
+
 ?>
 
 <script>
@@ -51,6 +52,11 @@ function alert_animation() {
             <div class="header-item">あなたのプロフィール</div>
           </nav>
         </div>
+        <?php if(isset($_SESSION['userID']) && $_SESSION['time'] + 3600 > time()):?>
+          <div>
+            <p><?php print($_COOKIE['username'])?>さん</p>
+          </div>
+        <?php endif;?>
         <div class="header-signup">
         <?php if(!isset($_SESSION['userID'])) :?>
           <a href="?page=signUp" class="btn btn-flat"><span>会員登録</span></a>

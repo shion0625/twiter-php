@@ -21,7 +21,6 @@ try {
   print_r("接続失敗: ".$e->getMessage()."\n");
   exit();
 }
-
 /**
  * htmlspecialcharsのラッパー関数
  *
