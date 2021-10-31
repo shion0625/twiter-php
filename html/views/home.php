@@ -38,7 +38,6 @@ $posts = db_get_tweets($dbh);
 <script>
   $(()=> {
     const popup = $('#js-popup');
-    console.log(popup);
     if(!popup) return;
     $('#js-black-bg').on('click', () => {
       popup.toggleClass('is-show');
@@ -50,6 +49,16 @@ $posts = db_get_tweets($dbh);
       popup.toggleClass('is-show');
     });
   });
+
+const conn = new WebSocket('ws://localhost:8081');
+console.log('connect');
+conn.onopen = function(e) {
+  console.log("Connection established!");
+};
+conn.onmessage = function(e) {
+    console.log(e.data);
+};
+// conn.send('hello world');
 </script>
 
 <div class='main-all-contents'>
