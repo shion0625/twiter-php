@@ -50,14 +50,54 @@ $posts = db_get_tweets($dbh);
     });
   });
 
-const conn = new WebSocket('ws://localhost:8081');
-console.log('connect');
-conn.onopen = function(e) {
-  console.log("Connection established!");
-};
-conn.onmessage = function(e) {
-    console.log(e.data);
-};
+const conn = "";
+function open() {
+  const conn = new WebSocket('wss://localhost:8081');
+  console.log('connect');
+  conn.onopen = function(e) {
+    console.log("Connection established!");
+  };
+  conn.onerror = function(e) {
+    alert("エラーが発生しました。");
+  }
+}
+
+//   conn.onmessage = function(e) {
+//     const data = JSON.parse(e.data);
+//     const divObj = document.createElement("DIV");
+//     if (data["position"] == "left") {
+//       divObj.className = 'receive-msg-left';
+//     } else {
+//       divObj.className = 'receive-msg-right';
+//     }
+//     const msgSplit = data["msg"].split('\n');
+//     for (let i in msgSplit) {
+//       const msg = document.createTextNode(msgSplit[i]);
+//       const rowObj = document.createElement("DIV");
+//       rowObj.appendChild(msg);
+//       divObj.appendChild(rowObj);
+//     }
+//     var msgLog = document.getElementById("msg_log");
+//     msgLog.appendChild(divObj);
+//     var br = document.createElement("BR");
+//     br.className = 'br';
+//     msgLog.appendChild(br);
+//     msgLog.scrollTop = msgLog.scrollHeight;
+//       };
+//     conn.onclose = function() {
+//       alert("切断しました");
+//       setTimeout(open, 5000);
+//     };
+//   }
+// function send(){
+//   conn.send(document.getElementById("msg").value);
+// }
+// function close(){
+//   conn.close();
+// }
+// open();
+
+
 // conn.send('hello world');
 </script>
 
