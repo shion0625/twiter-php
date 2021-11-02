@@ -2,11 +2,11 @@
 session_start();
 print_r($_SESSION);
 
+
 ?>
 
 <script>
 function alert_animation() {
-  console.log('alert');
   $('#msgAlert').fadeIn(2000);
   setInterval(() => {
     $('#msgAlert').fadeOut(2000);

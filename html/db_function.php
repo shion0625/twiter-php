@@ -65,6 +65,7 @@ function db_insert_tweet($dbh, $user_id, $date_time, $tweet_content) {
     $stmt->bindValue(":tweet_content", $tweet_content);
     $flag = $stmt->execute();
   }catch (PDOException $e) {
+    echo $e;
     exit('データベースエラー db_insert_tweet');
   }
   return $flag;
