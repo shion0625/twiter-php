@@ -57,48 +57,43 @@ $db_posts = db_get_tweets($dbh);
   });
 //ウェブソケットを使用して送信されたデータをサーバサイドに送信
 let conn = "";
-function open(){
+$(() =>{
   conn = new WebSocket('ws://localhost:8081');
   // if(conn && conn.readyState === 1) return false;
-  conn.onopen = function(event) {
-    console.log('connect');
+  conn.onopen = (event) => {
     console.log("Connection established!");
   };
 
-  conn.onerror = function(event) {
+  conn.onerror = (event) => {
     alert("エラーが発生しました");
   };
 
-  conn.onmessage = function(event) {
-    console.log(event.data);
+  conn.onmessage = (event) => {
     const dataArray = event.data.split(">");
-    const postObj = document.getElementById("js-posts");
-    let divObj = document.createElement("DIV");
-    divObj.className = "post";
-    postObj.prepend(divObj);
+    // let divObj = $("<div class='post'>")[0];
+    let divObj = createElem("div", 'post');
+    let postObj=$("#js-posts").prepend(divObj);
     for(let i in dataArray) {
-      let pObj = document.createElement("P");
-      divObj.appendChild(pObj);
       let data = document.createTextNode(dataArray[i].trim());
-      console.log(data);
+      let pObj;
       if(i == 0) {
-        let imgObj = document.createElement("img");
-        let spanObj = document.createElement("span");
-        pObj.className="post-user-detail";
-        imgObj.className="user-post-img";
-        spanObj.className="tweet-username";
-        pObj.appendChild(imgObj);
-        spanObj.appendChild(data);
-        pObj.appendChild(spanObj);
-      }else if(i == 1){
-        pObj.className="appendix";
-        let spanObj= document.createElement("span");
-        spanObj.appendChild(data);
-        pObj.appendChild(spanObj);
-      }else if(i == 2) {
-        pObj.className="tweet-content";
-        pObj.appendChild(data);
+        pObj = createElem("p", 'post-user-detail');
+        let imgObj = createElem("img", 'user-post-img');
+        let spanObj = createElem("span", 'tweet-username');
+        spanObj.append(data);
+        pObj.append(imgObj);
+        pObj.append(spanObj);
       }
+      else if(i == 1){
+        pObj = createElem("p", 'tweet-content');
+        pObj.append(data);
+      }else if(i == 2) {
+        pObj = createElem("p", 'appendix');
+        let spanObj= createElem("span");
+        spanObj.append(data);
+        pObj.append(spanObj);
+      }
+      divObj.append(pObj);
     }
 
   };
@@ -106,7 +101,7 @@ function open(){
           alert("切断しました");
           setTimeout(open, 5000);
       };
-}
+});
 
 function socketSend() {
   let dateObj = new Date();
@@ -125,6 +120,9 @@ function socketSend() {
   ">"+postContent+
   ">"+localDate +" "+ localTime);
   console.log('send');
+}
+function close(){
+  conn.close();
 }
 
 function getCookieUsername(){
@@ -145,11 +143,11 @@ function htmlentities(str){
     .replace(/>/g,"&gt;")
     .replace(/"/g,"&quot;")
 }
-
-function close(){
-  conn.close();
+function createElem(element, className) {
+  const newElement = $("<"+element + " class=" + className +">")[0];
+  console.log(newElement);
+  return newElement;
 }
-open();
 </script>
 
 <div class='main-all-contents'>
