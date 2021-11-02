@@ -154,6 +154,7 @@ function createElem(element, className) {
   <div class=tweet-btn>
     <button id="js-show-popup">ツイートする</button>
   </div>
+  <?php if(!empty($_SESSION["userID"])):?>
   <div class="popup" id="js-popup">
     <div class="popup-inner">
       <div class="close-btn" id="js-close-btn">
@@ -175,6 +176,19 @@ function createElem(element, className) {
     </div>
     <div class="black-background" id="js-black-bg"></div>
   </div>
+  <?php else:?>
+    <div class="popup" id="js-popup">
+    <div class="popup-inner">
+      <div class="close-btn" id="js-close-btn">
+        <i class="fas fa-times"></i>
+      </div>
+      <p class="tweet-not-login">
+          ログインしてください。
+        </p>
+    </div>
+    <div class="black-background" id="js-black-bg"></div>
+  </div>
+  <?php endif;?>
   <div id="js-posts" class="post"></div>
   <?php foreach($db_posts as $post):?>
     <div class="post">
