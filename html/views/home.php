@@ -70,7 +70,6 @@ $(() =>{
 
   conn.onmessage = (event) => {
     const dataArray = event.data.split(">");
-    // let divObj = $("<div class='post'>")[0];
     let divObj = createElem("div", 'post');
     let postObj=$("#js-posts").prepend(divObj);
     for(let i in dataArray) {
@@ -114,7 +113,7 @@ function socketSend() {
   const username = getCookieUsername();
   const localDate = [fullYear, month, date].join("-");
   const localTime =[hours, minute, seconds].join(":");
-  let postContent = document.getElementById("js-post-content").value;
+  let postContent = $("#js-post-content").value;
   postContent = htmlentities(postContent);
   conn.send(username +
   ">"+postContent+
@@ -126,11 +125,11 @@ function close(){
 }
 
 function getCookieUsername(){
-    var arr = new Array();
+    let arr = new Array();
     if(document.cookie != ''){
-        var tmp = document.cookie.split('; ');
-        for(var i=0;i<tmp.length;i++){
-            var data = tmp[i].split('=');
+        let tmp = document.cookie.split('; ');
+        for(let i=0;i<tmp.length;i++){
+            let data = tmp[i].split('=');
             arr[data[0]] = decodeURIComponent(data[1]);
         }
     }
@@ -143,6 +142,7 @@ function htmlentities(str){
     .replace(/>/g,"&gt;")
     .replace(/"/g,"&quot;")
 }
+
 function createElem(element, className) {
   const newElement = $("<"+element + " class=" + className +">")[0];
   console.log(newElement);
