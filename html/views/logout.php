@@ -1,10 +1,5 @@
 <?php
-  session_unset();
-  session_destroy();
+  delete_session();
   header("Location: /");
   exit();
 ?>
-<div>
-  <h2>ログアウトしました。</h2>
-  <a href="/">トップページに戻る</a>
-</div>

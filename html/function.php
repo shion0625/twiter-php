@@ -50,6 +50,11 @@ function fun_require_unlogined_session() {
 //   }
 // }
 
+function delete_session() {
+  session_unset();
+  session_destroy();
+  return;
+}
 /**
  * CSRFトークンの生成
  *

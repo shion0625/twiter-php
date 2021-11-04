@@ -37,7 +37,6 @@ if(!empty($_POST) && isset($_POST['send'])) {
 }
 
 $db_posts = db_get_tweets($dbh);
-
 ?>
 
 <script>
@@ -150,7 +149,7 @@ function createElem(element, className) {
 }
 </script>
 
-<div class='main-all-contents'>
+<div class='home-all-contents'>
   <div class=tweet-btn>
     <button id="js-show-popup">ツイートする</button>
   </div>
@@ -202,7 +201,11 @@ function createElem(element, className) {
           <?php print(fun_h($post['tweet_content']))?></p>
         <p class="appendix">
           <span><?php print(fun_h($post['date_time']))?></span>
-          <a href="delete.php" style="color:F33;">削除</a>
+          <form action=?page=delete method="POST">
+            <input type="hidden" name="post_id" value="
+              <?php print(fun_h($post['post_id']));?>">
+              <button>削除</button>
+          </form>
         </p>
 
     </div>

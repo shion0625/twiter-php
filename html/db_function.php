@@ -1,4 +1,5 @@
 <?php
+
 function db_login($dbh, $email) {
   try {
     $login_query = "SELECT * FROM users WHERE email=:email";
@@ -75,6 +76,31 @@ function db_get_tweets($dbh) {
   try {
     $tweets_query = "SELECT u.user_name, t.* FROM users u, tweet t WHERE u.email_encode = t.user_id ORDER BY t.date_time DESC";
     $stmt = $dbh->prepare($tweets_query);
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  }
+  catch (PDOException $e) {
+    echo $e;
+    exit('データベースエラー db_get_tweets');
+  }
+  return $result;
+}
+
+function db_delete_tweet() {
+  try{
+    $query_delete ="DELETE FROM tweet WHERE post_id=:id";
+  }
+  catch (PDOException $e) {
+    echo $e;
+    exit('データベースエラー db_delete_tweet');
+  }
+}
+
+function db_get_tweet($dbh, $post_id) {
+  try {
+    $tweet_query = "SELECT u.user_name, t.* FROM tweet t INNER JOIN users u ON t.user_id = u.email_encode WHERE t.post_id=:post_id";
+    $stmt = $dbh->prepare($tweet_query);
+    $stmt->bindValue("post_id", $post_id);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
