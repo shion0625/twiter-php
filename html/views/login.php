@@ -74,7 +74,7 @@ $(()=> {
     </div>
     <div class="login-contents">
       <div class="message"><?php echo $message;?></div>
-      <form action=?page=login method=POST>
+      <form method=POST>
         <div class="message"><?php echo $message_email;?></div>
         <input id="input_email" class="login-form-input-email" name="email" type="text" placeholder="メールアドレスを入力して下さい">
         <div id="pwBox">

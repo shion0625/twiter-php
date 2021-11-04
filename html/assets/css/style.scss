@@ -242,7 +242,7 @@ body {
     top: 0;
   }
 /////////////////////////////////////////////////////
-  .main-all-contents {
+  .home-all-contents {
     .popup {
       position: fixed;
       left: 0;
@@ -404,6 +404,7 @@ body {
       }
     }
   }
+  ////////////////////////////////////////////
   .login-all-contents{
     .login-box {
       background: linear-gradient(25deg, rgba(175, 223, 238, 0.4), rgba(180, 173, 240, 0.4)) ,url(../img/bokeh-2072271_1920.jpg);
@@ -457,6 +458,29 @@ body {
           }
         }
       }
+    }
+  }
+  //////////////////////////////
+  .delete-all-contents {
+    .btn_cancel {
+      display: inline-block;
+      margin-right: 10px;
+      padding: 10px 20px;
+      color: #555;
+      font-size: 86%;
+      border-radius: 5px;
+      border: 1px solid #999;
+    }
+    .btn_cancel:hover {
+      color: #999;
+      border-color: #999;
+      text-decoration: none;
+    }
+
+    .text-confirm {
+      margin-bottom: 20px;
+      font-size: 86%;
+      line-height: 1.6em;
     }
   }
 }

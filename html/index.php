@@ -19,9 +19,10 @@ include ( __DIR__ . '/views/header.php');
 	}
   // 	include("views/timeline.php");
 
-	// } else if($_GET['page'] == 'yourtweets') {
+	//}
+	else if($_GET['page'] == 'yourtweets') {
 
-	// 	include("views/yourtweets.php");
+		include("views/your_tweets.php");
 
 	// } else if($_GET['page'] == 'search') {
 
@@ -30,7 +31,10 @@ include ( __DIR__ . '/views/header.php');
 	// } else if($_GET['page'] == 'profiles') {
 
 	// 	include("views/profiles.php");
-	// }
+	}
+	else if($_GET['page'] == 'delete') {
+		include(__DIR__ . '/views/delete.php');
+	}
 	else {
 		include(__DIR__ .'/views/home.php');
 	}
