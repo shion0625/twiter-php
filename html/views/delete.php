@@ -1,10 +1,7 @@
 <?php
-require_once __DIR__ . '/../function.php';
-require  __DIR__ . '/../db_function.php';
 
 $post_id = trim(fun_h($_POST["post_id"]));
-$tweet_data = db_get_tweet($dbh, $post_id)[0];
-
+$tweet_data = db_get_tweet($post_id)[0];
 ?>
 <div class="delete-all-contents">
   <form method="post">

@@ -2,18 +2,6 @@
 
 use Symfony\Component\HttpFoundation\Cookie;
 
-require_once __DIR__ . '/../function.php';
-require  __DIR__ . '/../db_function.php';
-
-if(isset($_SESSION['userID']) && $_SESSION['time'] + 3600 > time()) {
-  $_SESSION['time'] = time();
-  $result = db_user_details($dbh);
-  setcookie('username', fun_h($result['user_name']),time()+60*60*24*14);
-} else {
-  // header("Location: ?page=login");
-  // exit();
-}
-
 // if($_SERVER['REQUEST_METHOD'] != 'POST') {
 //   $message="無効なメソッドでの送信です。";
 //
@@ -207,7 +195,6 @@ function createElem(element, className) {
               <button>削除</button>
           </form>
         </p>
-
     </div>
   <?php endforeach;?>
 

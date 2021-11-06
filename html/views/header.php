@@ -1,8 +1,24 @@
 <?php
 session_start();
 print_r($_SESSION);
+require_once __DIR__ . '/../function.php';
+require_once  __DIR__ . '/../db_function.php';
+require_once __DIR__. '/../image.php';
 
 
+if(isset($_SESSION['userID']) && $_SESSION['time'] + 3600 > time()) {
+  $_SESSION['time'] = time();
+} else {
+  // header("Location: ?page=login");
+  // exit();
+}
+if(isset($_SESSION['username']) || empty($_SESSION['username'])) {
+  $result = db_user_details($dbh);
+  $_SESSION['username'] =fun_h($result['user_name']);
+}
+// if(!isset($_SESSION['image_type']) || $_SESSION['image_content']) {
+  // $result = db_get_user_image($_SESSION['userID']);
+// }
 ?>
 
 <script>
@@ -43,18 +59,27 @@ function alert_animation() {
           </div>
         <?php endif; ?>
         <div class="header-logo">
-          <h1>twitter</h1>
+          <a href="/"><h1>twitter</h1></a>
+
         </div>
         <div class="header-nav">
           <nav>
             <div class="header-item">あなたのタイムライン</div>
-            <div class="header-item">あなたのツイート</div>
-            <div class="header-item">あなたのプロフィール</div>
+            <div class="header-item">
+              <a href="?page=yourTweets">あなたのツイート</a>
+            </div>
+            <div class="header-item"> <a href="?page=profiles">あなたのプロフィール</a></div>
           </nav>
         </div>
-        <?php if(isset($_SESSION['userID']) && $_SESSION['time'] + 3600 > time()):?>
+        <?php if(isset($_SESSION['userID'])):?>
           <div>
-            <p><?php print($_COOKIE['username'])?>さん</p>
+            <p>
+              <?php
+                list($img_type, $img_content) = image_get_image_content();
+              ?>
+              <img src="data:<?php echo $img_type ?>;base64,<?php echo $img_content; ?>" width="40px" height="auto">
+              <?php print($_SESSION['username'])?>さん
+            </p>
           </div>
         <?php endif;?>
         <div class="header-signup">
@@ -86,8 +111,8 @@ function alert_animation() {
             </div>
             <nav class="nav-sp">
                 <ul>
-                  <li><a href="#">あなたのタイムライン</a></li>
-                  <li><a href="#">あなたのツイート</a></li>
+                  <li><a href="?page=profiles">あなたのタイムライン</a></li>
+                  <li><a href="?page=yourTweets">あなたのツイート</a></li>
                   <li><a href="#">あなたのプロフィール</a></li>
                 </ul>
               </nav>

@@ -1,12 +1,11 @@
 <?php
-require './vendor/autoload.php';
+require './vendor/autoload.php';;
 // .envを使用する
 $dotenv = Dotenv\Dotenv::createUnsafeImmutable(__DIR__);
 $dotenv->load();
 
-// include ( __DIR__ . '/assets/lib/ChromePhp.php');
-include ( __DIR__ . '/function.php');
 // include(__DIR__. '/action.php');
+include ( __DIR__ . '/function.php');
 include ( __DIR__ . '/views/header.php');
   if($_GET['page'] == 'login') {
     include ( __DIR__ . '/views/login.php');
@@ -20,17 +19,17 @@ include ( __DIR__ . '/views/header.php');
   // 	include("views/timeline.php");
 
 	//}
-	else if($_GET['page'] == 'yourtweets') {
+	else if($_GET['page'] == 'yourTweets') {
 
 		include("views/your_tweets.php");
 
 	// } else if($_GET['page'] == 'search') {
 
 	// 	include("views/footer.php");
-
-	// } else if($_GET['page'] == 'profiles') {
-
-	// 	include("views/profiles.php");
+	}else if($_GET['page'] == 'image') {
+		include("views/image.php");
+	} else if($_GET['page'] == 'profiles') {
+	include("views/profile.php");
 	}
 	else if($_GET['page'] == 'delete') {
 		include(__DIR__ . '/views/delete.php');

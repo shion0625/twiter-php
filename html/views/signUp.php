@@ -1,6 +1,4 @@
 <?php
-require_once __DIR__ . '/../function.php';
-require_once __DIR__ . '/../db_function.php';
 
 $regexp_em = '/^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/';
 $regexp_pw = '/^(?=.*[A-Z])(?=.*[.?\/-])[a-zA-Z0-9.?\/-]{8,24}$/';
@@ -31,7 +29,7 @@ if(isset($_POST['submit'])) {
     $is_pass = false;
   }
   if($is_pass) {
-    $result = db_signup_check($dbh, $email);
+    $result = db_signup_check($email);
     if($result) {
       //検索して同じメールアドレスが使用されていた！
       $message_alert = "そのメールアドレスは使用されています。";
@@ -40,7 +38,7 @@ if(isset($_POST['submit'])) {
       exit();
     } else {
       //データベースにユーザの登録を行う!
-      $flag = db_signup_insert($dbh, $username, $password, $email);
+      $flag = db_signup_insert($username, $password, $email);
       if($flag) {
         $message_alert = "ユーザの登録に成功しました。";
         $_SESSION['messageAlert'] = fun_h($message_alert);

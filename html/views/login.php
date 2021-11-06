@@ -1,6 +1,4 @@
 <?php
-require_once __DIR__ . '/../function.php';
-require  __DIR__ . '/../db_function.php';
 
   //ログイン状態の場合ログイン後のページにリダイレクト
   fun_require_unlogined_session();
@@ -26,7 +24,7 @@ require  __DIR__ . '/../db_function.php';
     //メールアドレスとパスワードが送信されて来た場合
     if($is_pass) {
       //post送信されてきたメールアドレスがデータベースにあるか検索
-      $result = db_login($dbh, $email);
+      $result = db_login($email);
       //検索したユーザー名に対してパスワードが正しいかを検証
     //正しくないとき
     if (!password_verify($password, $result['password'])) {

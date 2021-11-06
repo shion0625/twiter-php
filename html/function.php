@@ -1,12 +1,8 @@
 <?php
 
 session_start();
-$dsn = getenv('DB_DSN');
-$user = getenv('DB_USER');
-$password = getenv('DB_PASSWORD');
-// $dsn = 'mysql:host=mysql;dbname=test;charset=utf8';
-// $user = 'root';
-// $password = 'root';
+
+
 $options = array(
   PDO::MYSQL_ATTR_INIT_COMMAND=>"SET CHARACTER SET 'utf8'",
   PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -14,13 +10,9 @@ $options = array(
   PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true
 );
 error_reporting(E_ALL & ~E_NOTICE);
-try {
-  $dbh = new PDO($dsn, $user, $password);
-  $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-  print_r("接続失敗: ".$e->getMessage()."\n");
-  exit();
-}
+
+
+
 /**
  * htmlspecialcharsのラッパー関数
  *
@@ -76,5 +68,13 @@ function fun_validate_token($token)
 {
     // 送信されてきた$tokenがこちらで生成したハッシュと一致するか検証
     return $token === fun_generate_token();
+}
+
+function debug_to_console($data) {
+  if(is_array($data) || is_object($data)) {
+    echo("<script>console.log('PHP: ".json_encode($data)."');</script>");
+  } else {
+    echo("<script>console.log('PHP: $data');</script>");
+  }
 }
 ?>
