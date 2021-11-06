@@ -5,48 +5,47 @@
   // if(!empty($_COOKIE['auto_login'])) {
 
   // }
-  if(isset($_POST['send'])) {
-    $message = "";
-  }
-  else {
-    //メールアドレスまたはパスワードが送信されて来なかった場合
-    $is_pass = true;
-    $email = fun_h($_POST['email']);
-    $password= fun_h($_POST['password']);
-    if(empty($email)) {
-      $message_email = "メールアドレスを入力してください。";
-      $is_pass = false;
-    }
-    if(empty($password)) {
-      $message_pw = "パスワードを入力してください。";
-      $is_pass = false;
-    }
-    //メールアドレスとパスワードが送信されて来た場合
-    if($is_pass) {
-      //post送信されてきたメールアドレスがデータベースにあるか検索
-      $result = db_login($email);
-      //検索したユーザー名に対してパスワードが正しいかを検証
-    //正しくないとき
-    if (!password_verify($password, $result['password'])) {
-      $message="メールアドレスかパスワードが違います";
-      $_SESSION['messageAlert'] = fun_h('ログインに失敗しました。');
-      header('Location: /?page=login');
-      exit();
-    }
-    //正しいとき
-    else {
-      session_regenerate_id(TRUE); //セッションidを再発行
+  if (isset($_POST['send'])) {
+      $message = "";
+  } else {
+      //メールアドレスまたはパスワードが送信されて来なかった場合
+      $is_pass = true;
+      $email = fun_h($_POST['email']);
+      $password= fun_h($_POST['password']);
+      if (empty($email)) {
+          $message_email = "メールアドレスを入力してください。";
+          $is_pass = false;
+      }
+      if (empty($password)) {
+          $message_pw = "パスワードを入力してください。";
+          $is_pass = false;
+      }
+      //メールアドレスとパスワードが送信されて来た場合
+      if ($is_pass) {
+          //post送信されてきたメールアドレスがデータベースにあるか検索
+          $result = db_login($email);
+          //検索したユーザー名に対してパスワードが正しいかを検証
+          //正しくないとき
+          if (!password_verify($password, $result['password'])) {
+              $message="メールアドレスかパスワードが違います";
+              $_SESSION['messageAlert'] = fun_h('ログインに失敗しました。');
+              header('Location: /?page=login');
+              exit();
+          }
+          //正しいとき
+          else {
+              session_regenerate_id(true); //セッションidを再発行
       $_SESSION['userID'] = $result['email_encode']; //セッションにログイン情報を登録
       $_SESSION['messageAlert'] = fun_h('ログインに成功しました。');
-      $_SESSION['time'] = time();
-      // if($_POST['save'] == 'on') {
+              $_SESSION['time'] = time();
+              // if($_POST['save'] == 'on') {
       //   setcookie('auto_login', $result['email_encode'],time()+60*60*24*14);
       // }
       header('Location: /');//ログイン後のページにリダイレクト
       exit();
-    }
+          }
+      }
   }
-}
 ?>
 <script>
 //パスワードの可視化と不可視化

@@ -2,22 +2,22 @@
 use Symfony\Component\HttpFoundation\Cookie;
 
 //データベースに投稿内容を保存
-if(!empty($_POST) && isset($_POST['send'])) {
-  $user_id = $_SESSION['userID'];
-  $date_time = date("Y-m-d H:i:s");
-  $tweet_content = fun_h($_POST['tweet-input']);
-  $flag = db_insert_tweet($user_id, $date_time, $tweet_content);
-  if($flag) {
-    $message_alert = "ツイートに成功しました。";
-    $_SESSION['messageAlert'] = fun_h($message_alert);
-    header("Location: {$_SERVER['PHP_SELF']}");
-    exit();
-  } else {
-    $message_alert = "ツイートに失敗しました。";
-    $_SESSION['messageAlert'] = fun_h($message_alert);
-    header("Location: {$_SERVER['PHP_SELF']}");
-    exit();
-  }
+if (!empty($_POST) && isset($_POST['send'])) {
+    $user_id = $_SESSION['userID'];
+    $date_time = date("Y-m-d H:i:s");
+    $tweet_content = fun_h($_POST['tweet-input']);
+    $flag = db_insert_tweet($user_id, $date_time, $tweet_content);
+    if ($flag) {
+        $message_alert = "ツイートに成功しました。";
+        $_SESSION['messageAlert'] = fun_h($message_alert);
+        header("Location: {$_SERVER['PHP_SELF']}");
+        exit();
+    } else {
+        $message_alert = "ツイートに失敗しました。";
+        $_SESSION['messageAlert'] = fun_h($message_alert);
+        header("Location: {$_SERVER['PHP_SELF']}");
+        exit();
+    }
 }
 
 $db_posts = db_get_tweets();
@@ -127,7 +127,7 @@ function createElem(element, className) {
   <div class=tweet-btn>
     <button id="js-show-popup">ツイートする</button>
   </div>
-  <?php if(!empty($_SESSION["userID"])):?>
+  <?php if (!empty($_SESSION["userID"])):?>
   <div class="popup" id="js-popup">
     <div class="popup-inner">
       <div class="close-btn" id="js-close-btn">
@@ -163,11 +163,11 @@ function createElem(element, className) {
   </div>
   <?php endif;?>
   <div id="js-posts" class="post"></div>
-  <?php foreach($db_posts as $post):?>
+  <?php foreach ($db_posts as $post):?>
     <div class="post">
         <p class="post-user-detail">
           <?php
-          if(isset($post['image_type']) && isset($post['image_content'])):
+          if (isset($post['image_type']) && isset($post['image_content'])):
             $image_content = base64_encode($post['image_content']);
           ?>
             <img src="data:<?php echo $post['image_type'] ?>;base64,<?php echo $image_content; ?>" width="40px" height="auto">

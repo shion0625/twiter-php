@@ -5,53 +5,53 @@ $regexp_pw = '/^(?=.*[A-Z])(?=.*[.?\/-])[a-zA-Z0-9.?\/-]{8,24}$/';
 fun_require_unlogined_session();
 
 
-if(isset($_POST['submit'])) {
-  $is_pass = true;
-  $username = fun_h($_POST['username']);
-  $password = fun_h($_POST['password']);
-  $email = fun_h($_POST['email']);
-  if(empty($username)) {
-    $error['user'] = "ユーザ名を入力してください。";
-    $is_pass = false;
-  }
-  if (empty($email)) {
-    $error['email'] = "メールアドレスを入力してください。";
-    $is_pass = false;
-  } else if(!preg_match($regexp_em, $email)) {
-    $error['email'] = "メールアドレスを正しく入力してください。";
-    $is_pass = false;
-  }
-  if(empty($password)) {
-    $error['password'] = "パスワードを入力してください。";
-    $is_pass = false;
-  } else if(!preg_match($regexp_pw, $password)) {
-    $error['password'] = "パスワードを正しく入力してください。";
-    $is_pass = false;
-  }
-  if($is_pass) {
-    $result = db_signup_check($email);
-    if($result) {
-      //検索して同じメールアドレスが使用されていた！
-      $message_alert = "そのメールアドレスは使用されています。";
-      $_SESSION['messageAlert'] = fun_h($message_alert);
-      header("Location: /?page=signUp");
-      exit();
-    } else {
-      //データベースにユーザの登録を行う!
-      $flag = db_signup_insert($username, $password, $email);
-      if($flag) {
-        $message_alert = "ユーザの登録に成功しました。";
-        $_SESSION['messageAlert'] = fun_h($message_alert);
-        header('Location: /?page=login');
-        exit();
-      } else {
-        $message_alert = "ユーザの登録に失敗しました。もう一度お願いします。";
-        $_SESSION['messageAlert'] = fun_h($message_alert);
-        header("Location: /?page=signUp");
-        exit();
-      }
+if (isset($_POST['submit'])) {
+    $is_pass = true;
+    $username = fun_h($_POST['username']);
+    $password = fun_h($_POST['password']);
+    $email = fun_h($_POST['email']);
+    if (empty($username)) {
+        $error['user'] = "ユーザ名を入力してください。";
+        $is_pass = false;
     }
-  }
+    if (empty($email)) {
+        $error['email'] = "メールアドレスを入力してください。";
+        $is_pass = false;
+    } elseif (!preg_match($regexp_em, $email)) {
+        $error['email'] = "メールアドレスを正しく入力してください。";
+        $is_pass = false;
+    }
+    if (empty($password)) {
+        $error['password'] = "パスワードを入力してください。";
+        $is_pass = false;
+    } elseif (!preg_match($regexp_pw, $password)) {
+        $error['password'] = "パスワードを正しく入力してください。";
+        $is_pass = false;
+    }
+    if ($is_pass) {
+        $result = db_signup_check($email);
+        if ($result) {
+            //検索して同じメールアドレスが使用されていた！
+            $message_alert = "そのメールアドレスは使用されています。";
+            $_SESSION['messageAlert'] = fun_h($message_alert);
+            header("Location: /?page=signUp");
+            exit();
+        } else {
+            //データベースにユーザの登録を行う!
+            $flag = db_signup_insert($username, $password, $email);
+            if ($flag) {
+                $message_alert = "ユーザの登録に成功しました。";
+                $_SESSION['messageAlert'] = fun_h($message_alert);
+                header('Location: /?page=login');
+                exit();
+            } else {
+                $message_alert = "ユーザの登録に失敗しました。もう一度お願いします。";
+                $_SESSION['messageAlert'] = fun_h($message_alert);
+                header("Location: /?page=signUp");
+                exit();
+            }
+        }
+    }
 }
 ?>
 
@@ -80,7 +80,7 @@ $(()=> {
     <h2>会員登録</h2>
     <div class="signup-main">
       <form action="" method=POST>
-        <?php if($error['invalid']):?>
+        <?php if ($error['invalid']):?>
           <p class="errMsg">
             <?php echo $error['invalid'];?>
           </p>
@@ -90,7 +90,7 @@ $(()=> {
             <label for="input_username">ユーザ名:</label>
             <span class="require">必須</span>
           </p>
-          <?php if($error['user']):?>
+          <?php if ($error['user']):?>
             <p class="errMsg">
               <?php echo $error['user'];?>
             </p>
@@ -102,7 +102,7 @@ $(()=> {
             <label for="input_email">メールアドレス:</label>
             <span class="require">必須</span>
           </p>
-          <?php if($error['email']): ?>
+          <?php if ($error['email']): ?>
             <p class="errMsg">
               <?php echo $error['email'];?>
             </p>
@@ -114,7 +114,7 @@ $(()=> {
             <label for="inputPassword">パスワード</label>
             <span class="require">必須</span>
           </p>
-          <?php if($error['password']):?>
+          <?php if ($error['password']):?>
             <p class="errMsg">
               <?php echo $error['password'];?>
             </p>

@@ -6,15 +6,15 @@ require_once  __DIR__ . '/../db_function.php';
 require_once __DIR__. '/../image.php';
 
 
-if(isset($_SESSION['userID']) && $_SESSION['time'] + 3600 > time()) {
-  $_SESSION['time'] = time();
+if (isset($_SESSION['userID']) && $_SESSION['time'] + 3600 > time()) {
+    $_SESSION['time'] = time();
 } else {
-  // header("Location: ?page=login");
+    // header("Location: ?page=login");
   // exit();
 }
-if(isset($_SESSION['username']) || empty($_SESSION['username'])) {
-  $result = db_user_details($dbh);
-  $_SESSION['username'] =fun_h($result['user_name']);
+if (isset($_SESSION['username']) || empty($_SESSION['username'])) {
+    $result = db_user_details($dbh);
+    $_SESSION['username'] =fun_h($result['user_name']);
 }
 ?>
 
@@ -45,7 +45,7 @@ function alert_animation() {
   <body>
     <header>
       <div id="header">
-        <?php if(!empty($_SESSION['messageAlert'])):?>
+        <?php if (!empty($_SESSION['messageAlert'])):?>
           <div class="msg-alert" id="msgAlert">
             <script type="text/javascript">
               alert_animation();
@@ -68,7 +68,7 @@ function alert_animation() {
             <div class="header-item"> <a href="?page=profiles">あなたのプロフィール</a></div>
           </nav>
         </div>
-        <?php if(isset($_SESSION['userID'])):?>
+        <?php if (isset($_SESSION['userID'])):?>
           <div>
             <p>
               <?php
@@ -80,13 +80,13 @@ function alert_animation() {
           </div>
         <?php endif;?>
         <div class="header-signup">
-        <?php if(!isset($_SESSION['userID'])) :?>
+        <?php if (!isset($_SESSION['userID'])) :?>
           <a href="?page=signUp" class="btn btn-flat"><span>会員登録</span></a>
         <?php endif; ?>
         </div>
         <div class="header-right">
           <div class="header-login">
-            <?php if(isset($_SESSION['userID'])) :?>
+            <?php if (isset($_SESSION['userID'])) :?>
             <a href="?page=logout" alt="ログアウトボタン">
               <!-- <i class="fas fa-door-open"></i> -->
             <i class="fas fa-door-closed"></i>
