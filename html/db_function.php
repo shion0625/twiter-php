@@ -13,7 +13,7 @@ function connect_db() {
   return $dbh;
 }
 
-function db_login( $email) {
+function db_login($email) {
   $dbh = connect_db();
   try {
     $login_query = "SELECT * FROM users WHERE email=:email";
@@ -93,7 +93,9 @@ function db_insert_tweet($user_id, $date_time, $tweet_content) {
 function db_get_tweets() {
   $dbh = connect_db();
   try {
-    $query = "SELECT u.user_name, t.* FROM users u, tweet t WHERE u.email_encode = t.user_id ORDER BY t.date_time DESC";
+    // $query = "SELECT u.user_name, t.* FROM users u, tweet t WHERE u.email_encode = t.user_id ORDER BY t.date_time DESC";
+    $query = "SELECT u.user_name, t.*, i.image_type, i.image_content FROM users AS u INNER JOIN tweet AS t ON u.email_encode = t.user_id LEFT OUTER JOIN user_image AS i ON t.user_id = i.user_id ORDER BY t.date_time DESC";
+    // $query = "SELECT u*, t*, i.image_type FROM users AS u INNER JOIN tweet AS t ON u.email_encode = t.user_id LEFT OUTER JOIN user_image AS i ON t.user_id = i.user_id ORDER BY t.date_time DESC";
     $stmt = $dbh->prepare($query);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);

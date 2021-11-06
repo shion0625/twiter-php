@@ -16,9 +16,6 @@ if(isset($_SESSION['username']) || empty($_SESSION['username'])) {
   $result = db_user_details($dbh);
   $_SESSION['username'] =fun_h($result['user_name']);
 }
-// if(!isset($_SESSION['image_type']) || $_SESSION['image_content']) {
-  // $result = db_get_user_image($_SESSION['userID']);
-// }
 ?>
 
 <script>

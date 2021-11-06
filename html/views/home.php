@@ -1,16 +1,12 @@
 <?php
-
 use Symfony\Component\HttpFoundation\Cookie;
 
-// if($_SERVER['REQUEST_METHOD'] != 'POST') {
-//   $message="無効なメソッドでの送信です。";
-//
-//データベースに投稿ないようを保存
+//データベースに投稿内容を保存
 if(!empty($_POST) && isset($_POST['send'])) {
   $user_id = $_SESSION['userID'];
   $date_time = date("Y-m-d H:i:s");
   $tweet_content = fun_h($_POST['tweet-input']);
-  $flag = db_insert_tweet($dbh, $user_id, $date_time, $tweet_content);
+  $flag = db_insert_tweet($user_id, $date_time, $tweet_content);
   if($flag) {
     $message_alert = "ツイートに成功しました。";
     $_SESSION['messageAlert'] = fun_h($message_alert);
@@ -24,7 +20,7 @@ if(!empty($_POST) && isset($_POST['send'])) {
   }
 }
 
-$db_posts = db_get_tweets($dbh);
+$db_posts = db_get_tweets();
 ?>
 
 <script>
@@ -97,10 +93,11 @@ function socketSend() {
   const hours = dateObj.getHours();
   const minute = dateObj.getMinutes();
   const seconds = dateObj.getSeconds();
-  const username = getCookieUsername();
+  const username = <?php echo json_encode($_SESSION['username']); ?>;
   const localDate = [fullYear, month, date].join("-");
   const localTime =[hours, minute, seconds].join(":");
-  let postContent = $("#js-post-content").value;
+  let postContent = $("#js-post-content").val();
+  console.log(postContent);
   postContent = htmlentities(postContent);
   conn.send(username +
   ">"+postContent+
@@ -111,17 +108,6 @@ function close(){
   conn.close();
 }
 
-function getCookieUsername(){
-    let arr = new Array();
-    if(document.cookie != ''){
-        let tmp = document.cookie.split('; ');
-        for(let i=0;i<tmp.length;i++){
-            let data = tmp[i].split('=');
-            arr[data[0]] = decodeURIComponent(data[1]);
-        }
-    }
-    return arr['username'];
-}
 
 function htmlentities(str){
   return String(str).replace(/&/g,"&amp;")
@@ -180,7 +166,12 @@ function createElem(element, className) {
   <?php foreach($db_posts as $post):?>
     <div class="post">
         <p class="post-user-detail">
-          <img src="" alt="" class ="user-post-img"width="24" height="24">
+          <?php
+          if(isset($post['image_type']) && isset($post['image_content'])):
+            $image_content = base64_encode($post['image_content']);
+          ?>
+            <img src="data:<?php echo $post['image_type'] ?>;base64,<?php echo $image_content; ?>" width="40px" height="auto">
+          <?php endif;?>
           <span class="tweet-username">
             <?php print(fun_h($post['user_name']))?>
           </span>
