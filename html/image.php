@@ -11,5 +11,3 @@ function image_get_image_content()
     $image_type = $image['image_type'];
     return array($image_type, $img);
 }
-?>
-

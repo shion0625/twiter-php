@@ -1,5 +1,4 @@
 <?php
-session_start();
 print_r($_SESSION);
 require_once __DIR__ . '/../function.php';
 require_once  __DIR__ . '/../db_function.php';
@@ -26,6 +25,7 @@ function alert_animation() {
       }, 7000);
 };
 </script>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -45,7 +45,7 @@ function alert_animation() {
   <body>
     <header>
       <div id="header">
-        <?php if (!empty($_SESSION['messageAlert'])):?>
+        <?php if (!empty($_SESSION['messageAlert'])) :?>
           <div class="msg-alert" id="msgAlert">
             <script type="text/javascript">
               alert_animation();
@@ -68,12 +68,12 @@ function alert_animation() {
             <div class="header-item"> <a href="?page=profiles">あなたのプロフィール</a></div>
           </nav>
         </div>
-        <?php if (isset($_SESSION['userID'])):?>
+        <?php if (isset($_SESSION['userID'])) :?>
           <div>
             <p>
-              <?php
+                <?php
                 list($img_type, $img_content) = image_get_image_content();
-              ?>
+                ?>
               <img src="data:<?php echo $img_type ?>;base64,<?php echo $img_content; ?>" width="40px" height="auto">
               <?php print($_SESSION['username'])?>さん
             </p>
@@ -87,17 +87,17 @@ function alert_animation() {
         <div class="header-right">
           <div class="header-login">
             <?php if (isset($_SESSION['userID'])) :?>
-            <a href="?page=logout" alt="ログアウトボタン">
-              <!-- <i class="fas fa-door-open"></i> -->
-            <i class="fas fa-door-closed"></i>
-            <p>ログアウト</p>
-          </a>
-          <?php else :?>
-          <a href="?page=login" alt="ログインボタン"><i class="fas fa-door-open"></i>
-            <!-- <i class="fas fa-door-closed"></i> -->
-            <p>ログイン</p>
-          </a>
-          <?php endif; ?>
+              <a href="?page=logout" alt="ログアウトボタン">
+                <!-- <i class="fas fa-door-open"></i> -->
+              <i class="fas fa-door-closed"></i>
+              <p>ログアウト</p>
+              </a>
+            <?php else :?>
+              <a href="?page=login" alt="ログインボタン"><i class="fas fa-door-open"></i>
+                <!-- <i class="fas fa-door-closed"></i> -->
+                <p>ログイン</p>
+              </a>
+            <?php endif; ?>
           </div>
           <div class="header-menu">
             <div class="menu-bar">

@@ -12,9 +12,9 @@ $server = IoServer::factory(
     new HttpServer(
         new WsServer(
             new Chat()
-            )
-        ),
+        )
+    ),
     8081
-    );
+);
 
 $server->run();

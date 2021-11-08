@@ -2,6 +2,9 @@
 
 function connect_db()
 {
+    // .envを使用する
+    $dotenv = Dotenv\Dotenv::createUnsafeImmutable(__DIR__);
+    $dotenv->load();
     $dsn = getenv('DB_DSN');
     $user = getenv('DB_USER');
     $password = getenv('DB_PASSWORD');
@@ -10,24 +13,10 @@ function connect_db()
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch (PDOException $e) {
         print_r("接続失敗: ".$e->getMessage()."\n");
+        // print_r($e);
         exit();
     }
     return $dbh;
-}
-
-function db_login($email)
-{
-    $dbh = connect_db();
-    try {
-        $login_query = "SELECT * FROM users WHERE email=:email";
-        $stmt = $dbh->prepare($login_query);
-        $stmt->bindValue(":email", $email);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        exit('データベースエラー db_login');
-    }
-    return $result;
 }
 
 function db_signup_check($email)
@@ -76,23 +65,6 @@ function db_user_details()
         exit('データベースエラー db_user_details');
     }
     return $result;
-}
-
-function db_insert_tweet($user_id, $date_time, $tweet_content)
-{
-    $dbh = connect_db();
-    try {
-        $query = "INSERT INTO tweet (user_id, date_time, tweet_content) VALUES (:user_id, :date_time, :tweet_content)";
-        $stmt = $dbh->prepare($query);
-        $stmt->bindValue(":user_id", $user_id);
-        $stmt->bindValue(":date_time", $date_time);
-        $stmt->bindValue(":tweet_content", $tweet_content);
-        $flag = $stmt->execute();
-    } catch (PDOException $e) {
-        echo $e;
-        exit('データベースエラー db_insert_tweet');
-    }
-    return $flag;
 }
 
 function db_get_tweets()

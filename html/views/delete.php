@@ -1,5 +1,4 @@
 <?php
-
 $post_id = trim(fun_h($_POST["post_id"]));
 $tweet_data = db_get_tweet($post_id)[0];
 ?>
@@ -34,3 +33,4 @@ $tweet_data = db_get_tweet($post_id)[0];
     } ?>">
   </form>
 </div>
+?
