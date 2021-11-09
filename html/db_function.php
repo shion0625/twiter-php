@@ -3,8 +3,8 @@
 function connect_db()
 {
     // .envを使用する
-    $dotenv = Dotenv\Dotenv::createUnsafeImmutable(__DIR__);
-    $dotenv->load();
+    // $dotenv = Dotenv\Dotenv::createUnsafeImmutable(__DIR__);
+    // $dotenv->load();
     $dsn = getenv('DB_DSN');
     $user = getenv('DB_USER');
     $password = getenv('DB_PASSWORD');
@@ -12,27 +12,13 @@ function connect_db()
         $dbh = new PDO($dsn, $user, $password);
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch (PDOException $e) {
-        print_r("接続失敗: ".$e->getMessage()."\n");
+        print_r("connect_db 接続失敗: ".$e->getMessage()."\n");
         // print_r($e);
         exit();
     }
     return $dbh;
 }
 
-function db_signup_check($email)
-{
-    $dbh = connect_db();
-    try {
-        $signup_query = "SELECT * FROM users WHERE email=:email";
-        $stmt = $dbh->prepare($signup_query);
-        $stmt->bindValue(":email", $email);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        exit('データベースエラー db_signup_check');
-    }
-    return $result;
-}
 
 function db_signup_insert($username, $password, $email)
 {

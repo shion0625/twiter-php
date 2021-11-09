@@ -27,19 +27,21 @@ class Connect extends Pdo
         $this-> DSN = getenv('DB_DSN');
         $this-> USER = getenv('DB_USER');
         $this->PASSWORD = getenv('DB_PASSWORD');
+        echo $this->DSN;
+        echo "hi";
     }
 
     /**
      * データベースと接続します。そしてインスタンスを返します。
      * @return mixed
      */
-    public function connectDb():object
+    protected function connectDb():object
     {
         try {
             $dbh = new Pdo($this->DSN, $this->USER, $this->PASSWORD);
             $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
-            print_r("接続失敗: ".$e->getMessage()."\n");
+            print_r("Connect 接続失敗: ".$e->getMessage()."\n");
             exit();
         }
         return $dbh;

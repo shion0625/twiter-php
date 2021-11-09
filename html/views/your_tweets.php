@@ -3,10 +3,10 @@
 ?>
 <div class=your-tweets-all-contents>
   <h2>あなたのツイート</h2>
-  <?php if (empty($your_tweets)):
-    echo "あなたはまだ投稿していません。";?>
-  <?php else:?>
-    <?php foreach ($your_tweets as $post):?>
+    <?php if (empty($your_tweets)) :
+        echo "あなたはまだ投稿していません。";?>
+    <?php else :?>
+    <?php foreach ($your_tweets as $post) :?>
       <div class="post">
       <p class="post-user-detail">
         <img src="" alt="" class ="user-post-img"width="24" height="24">

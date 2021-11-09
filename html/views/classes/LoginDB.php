@@ -20,7 +20,7 @@ class LoginDB extends Connect
     private $password;
 
     /**
-     * 文字列型でemailを受け取ります。
+     * 文字列型でメールアドレス、パスワードを受け取ります。
      *
      * @param string $email
      * @param string $password
@@ -34,9 +34,9 @@ class LoginDB extends Connect
     /**
      * データベースからemailが一致するデータベースの情報を取得しています。
      *
-     * @return array
+     * @return mixed
      */
-    private function getLoginInfo():array
+    private function getLoginInfo()
     {
         parent::__construct();
         $dbh = $this->connectDb();
@@ -57,7 +57,7 @@ class LoginDB extends Connect
      *
      * @return void
      */
-    public function checkLogin():void
+    public function loginCheck():void
     {
         $result = $this->getLoginInfo();
         if (!password_verify($this->password, $result['password'])) {
