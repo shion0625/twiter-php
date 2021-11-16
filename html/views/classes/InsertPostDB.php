@@ -33,6 +33,7 @@ class InsertPostDB extends Connect
         $this -> post_text = $post_text;
         $this -> date_time = date("Y-m-d H:i:s");
     }
+
     /**
      * ConnectクラスからconnectDbメソッドを継承してデータベースにデータを保存しています。
      *
@@ -55,6 +56,7 @@ class InsertPostDB extends Connect
         }
         return $flag;
     }
+
     /**
      * dbInsertTweetメソッドからあったか無かったかをboolで受け取り処理をします。
      *
@@ -67,11 +69,11 @@ class InsertPostDB extends Connect
             $_SESSION['messageAlert'] = fun_h("ツイートに成功しました。");
             header("Location: {$_SERVER['PHP_SELF']}");
             exit();
-        } else {
-            $_SESSION['messageAlert'] = fun_h("ツイートに失敗しました。");
-            header("Location: {$_SERVER['PHP_SELF']}");
-            exit();
+            return;
         }
+        $_SESSION['messageAlert'] = fun_h("ツイートに失敗しました。");
+        header("Location: {$_SERVER['PHP_SELF']}");
+        exit();
         return;
     }
 }

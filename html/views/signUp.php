@@ -13,7 +13,6 @@ if (isset($_POST['submit'])) {
     $email = (string)fun_h($_POST['email']);
     $sign_up_db = new SignUpDB($username, $password, $email);
     $error = $sign_up_db -> isCheckCondition();
-    print_r($error);
     if (!$error) {
         $sign_up_db ->resultSignUp();
     }

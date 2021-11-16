@@ -34,10 +34,19 @@ class LoginDB extends Connect
     /**
      * データベースからemailが一致するデータベースの情報を取得しています。
      *
-     * @return mixed
+     * @return mixed $login_information
+     * mixed(object)
+     * int id:
+     * string user_name
+     * string email
+     * string email_encode
      */
+
     private function getLoginInfo()
     {
+        /**
+         * Connect classのコンストラクタ
+         */
         parent::__construct();
         $dbh = $this->connectDb();
         try {
@@ -45,11 +54,11 @@ class LoginDB extends Connect
             $stmt = $dbh->prepare($login_query);
             $stmt->bindValue(":email", $this-> email, PDO::PARAM_STR);
             $stmt->execute();
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $login_information = $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             exit($e.'データベースエラー LoginDB > getLoginInfo');
         }
-        return $result;
+        return $login_information;
     }
 
     /**
@@ -57,16 +66,18 @@ class LoginDB extends Connect
      *
      * @return void
      */
-    public function loginCheck():void
+    public function login():void
     {
-        $result = $this->getLoginInfo();
-        if (!password_verify($this->password, $result['password'])) {
+        $login_info = $this->getLoginInfo();
+        if (!password_verify($this->password, $login_info['password'])) {
             $_SESSION['messageAlert'] = fun_h('ログインに失敗しました。');
             header('Location: /?page=login');
             exit();
         } else {
             session_regenerate_id(true); //セッションidを再発行
-            $_SESSION['userID'] = $result['email_encode']; //セッションにログイン情報を登録
+            //セッションにログイン情報を登録
+            $_SESSION['userID'] = $login_info['email_encode'];
+            $_SESSION['username']=$login_info['user_name'];
             $_SESSION['messageAlert'] = fun_h('ログインに成功しました。');
             $_SESSION['time'] = time();
             header('Location: /');//ログイン後のページにリダイレクト

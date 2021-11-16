@@ -18,17 +18,22 @@ class Connect extends Pdo
     private $USER;
     /** @var string $PASSWORD */
     private $PASSWORD;
-
+    /** @var array $options */
+    private $options = array(
+        PDO::MYSQL_ATTR_INIT_COMMAND=>"SET CHARACTER SET 'utf8'",
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true
+    );
     /**
      * 環境変数からデータベースの情報を受け取ります。
      */
     public function __construct()
     {
+
         $this-> DSN = getenv('DB_DSN');
         $this-> USER = getenv('DB_USER');
         $this->PASSWORD = getenv('DB_PASSWORD');
-        echo $this->DSN;
-        echo "hi";
     }
 
     /**
@@ -37,6 +42,8 @@ class Connect extends Pdo
      */
     protected function connectDb():object
     {
+
+        error_reporting(E_ALL & ~E_NOTICE);
         try {
             $dbh = new Pdo($this->DSN, $this->USER, $this->PASSWORD);
             $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

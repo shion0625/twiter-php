@@ -9,12 +9,9 @@ if (isset($_SESSION['userID']) && $_SESSION['time'] + 3600 > time()) {
     $_SESSION['time'] = time();
 } else {
     // header("Location: ?page=login");
-  // exit();
+    // exit();
 }
-if (isset($_SESSION['username']) || empty($_SESSION['username'])) {
-    $result = db_user_details($dbh);
-    $_SESSION['username'] =fun_h($result['user_name']);
-}
+
 ?>
 
 <script>

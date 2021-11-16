@@ -23,7 +23,7 @@ if (!empty($_POST) && isset($_POST['send'])) {
     if ($is_pass) {
         //post送信されてきたメールアドレスがデータベースにあ検索
         $get_login= new LoginDB($email, $password);
-        $get_login->loginCheck();
+        $get_login->login();
     }
 }
 ?>

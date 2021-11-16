@@ -1,5 +1,6 @@
 <?php
 use Classes\InsertPostDB;
+use Classes\GetPostDB;
 
 //データベースに投稿内容を保存
 if (!empty($_POST) && isset($_POST['send'])) {
@@ -8,8 +9,8 @@ if (!empty($_POST) && isset($_POST['send'])) {
     $insert_post_db = new InsertPostDB($user_id, $post_text);
     $insert_post_db->checkInsertTweet();
 }
-
-$db_posts = db_get_tweets();
+$get_post_db = new GetPostDB();
+$db_posts = $get_post_db->getPosts();
 ?>
 
 <script>

@@ -99,7 +99,7 @@ class SignUpDB extends Connect
 
     /**
      * 入力された情報をデータベースに保存しています。
-     *
+     * 成功と失敗を返します。
      * @return boolean
      */
     private function insertSignUp():bool
@@ -123,7 +123,6 @@ class SignUpDB extends Connect
 
     /**
      *  ユーザの登録に成功した場合と失敗した場合で分岐させています。
-     *
      * @return void
      */
     public function resultSignUp():void
