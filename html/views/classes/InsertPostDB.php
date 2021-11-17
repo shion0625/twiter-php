@@ -14,11 +14,11 @@ use Controller\Connect;
 
 class InsertPostDB extends Connect
 {
-    /** @var string $user_id　*/
+    /** @var string $user_id */
     private $user_id;
-    /** @var string $date_time　*/
+    /** @var string $date_time */
     private $date_time;
-    /** @var string $post_text　*/
+    /** @var string $post_text */
     private $post_text;
 
     /**

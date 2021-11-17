@@ -113,20 +113,20 @@ function createElem(element, className) {
 </script>
 
 <div class='home-all-contents'>
-  <div class=tweet-btn>
-    <button id="js-show-popup">ツイートする</button>
-  </div>
-  <?php if (!empty($_SESSION["userID"])) :?>
-  <div class="popup" id="js-popup">
+    <div class=tweet-btn>
+        <button id="js-show-popup">ツイートする</button>
+    </div>
+    <?php if (!empty($_SESSION["userID"])) :?>
+    <div class="popup" id="js-popup">
     <div class="popup-inner">
-      <div class="close-btn" id="js-close-btn">
-        <i class="fas fa-times"></i>
-      </div>
-      <button class="tweet-submit-btn" name="send" form="tweet" onclick="socketSend();" type="submit">ツイートする</button>
+        <div class="close-btn" id="js-close-btn">
+            <i class="fas fa-times"></i>
+        </div>
+        <button class="tweet-submit-btn" name="send" form="tweet" onclick="socketSend();" type="submit">ツイートする</button>
         <form id="tweet" class="tweet-form" method=POST>
-          <textarea id="js-post-content"
-          class="tweet-textarea"name="tweet-input" cols="" rows="10" wrap= "soft"required ></textarea>
-          <p class="tweet-items">
+            <textarea id="js-post-content"
+            class="tweet-textarea"name="tweet-input" cols="" rows="10" wrap= "soft"required ></textarea>
+            <p class="tweet-items">
             <span class="tweet-item"><i class="fas fa-bold"></i></span>
             <span class="tweet-item"><i class="fas fa-italic"></i></span>
             <span class="tweet-item"><i class="fas fa-underline"></i></span>
@@ -137,22 +137,22 @@ function createElem(element, className) {
         </form>
     </div>
     <div class="black-background" id="js-black-bg"></div>
-  </div>
-  <?php else :?>
+    </div>
+    <?php else :?>
     <div class="popup" id="js-popup">
     <div class="popup-inner">
-      <div class="close-btn" id="js-close-btn">
+    <div class="close-btn" id="js-close-btn">
         <i class="fas fa-times"></i>
-      </div>
-      <p class="tweet-not-login">
-          ログインしてください。
+    </div>
+        <p class="tweet-not-login">
+            ログインしてください。
         </p>
     </div>
     <div class="black-background" id="js-black-bg"></div>
-  </div>
-  <?php endif;?>
-  <div id="js-posts" class="post"></div>
-  <?php foreach ($db_posts as $post) :?>
+    </div>
+    <?php endif;?>
+    <div id="js-posts" class="post"></div>
+    <?php foreach ($db_posts as $post) :?>
     <div class="post">
         <p class="post-user-detail">
         <?php if (isset($post['image_type']) && isset($post['image_content'])) :
@@ -167,14 +167,16 @@ function createElem(element, className) {
         <?php print(fun_h($post['post_text']))?>
         </p>
         <p class="appendix">
-          <span><?php print(fun_h($post['date_time']))?></span>
-          <form action=?page=delete method="POST">
-            <input type="hidden" name="post_id" value="
-              <?php print(fun_h($post['post_id']));?>">
-              <button>削除</button>
-          </form>
+        <span><?php print(fun_h($post['date_time']))?></span>
+        <?php if ($post['user_name'] == $_SESSION['username']) :?>
+            <form action=?page=delete method="POST">
+                <input type="hidden" name="post_id" value="
+                <?php print(fun_h($post['post_id']));?>">
+                <button>削除</button>
+            </form>
+        <?php endif;?>
         </p>
     </div>
-  <?php endforeach;?>
+    <?php endforeach;?>
 
 </div>

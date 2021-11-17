@@ -19,43 +19,6 @@ function connect_db()
     return $dbh;
 }
 
-
-
-function db_get_your_tweets($user_id)
-{
-    $dbh = connect_db();
-    try {
-        $query = "SELECT u.user_name, t.* FROM users u INNER JOIN tweet t ON u.email_encode = t.user_id WHERE t.user_id=:user_id ORDER BY t.date_time DESC";
-        $stmt = $dbh->prepare($query);
-        $stmt->bindValue("user_id", $user_id);
-        $stmt->execute();
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        echo $e;
-        exit('データベースエラー db_get_tweets');
-    }
-    return $result;
-}
-
-function db_insert_image($name, $type, $content, $size, $user_id)
-{
-    $dbh = connect_db();
-    try {
-        $query = "INSERT INTO user_image (image_name, image_type, image_content, image_size, user_id) VALUES (:image_name, :image_type, :image_content, :image_size, :user_id)";
-        $stmt = $dbh->prepare($query);
-        $stmt->bindValue(':image_name', $name, PDO::PARAM_STR);
-        $stmt->bindValue(':image_type', $type, PDO::PARAM_STR);
-        $stmt->bindValue(':image_content', $content, PDO::PARAM_STR);
-        $stmt->bindValue(':image_size', $size, PDO::PARAM_INT);
-        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
-        $flag = $stmt->execute();
-    } catch (PDOException $e) {
-        echo $e;
-        exit('データベースエラー db_insert_image');
-    }
-    return $flag;
-}
-
 function db_get_user_image($user_id)
 {
     $dbh = connect_db();

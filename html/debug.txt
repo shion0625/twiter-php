@@ -1,7 +1,0 @@
-Array
-(
-    [userID] => $2y$10$CZU7NFLgzZkyezQBszFz.OJEzNtEVxv6F6KH026SCg6C1sABuOEDS
-    [messageAlert] => 
-    [time] => 1635674307
-)
-SEND

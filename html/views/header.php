@@ -2,8 +2,13 @@
 print_r($_SESSION);
 require_once __DIR__ . '/../function.php';
 require_once  __DIR__ . '/../db_function.php';
-require_once __DIR__. '/../image.php';
+use Classes\UsingGetImage;
 
+$user_id = $_SESSION['userID'];
+$using_get_image = new UsingGetImage('user_id', $user_id);
+$image = $using_get_image->usingGetImage();
+$image_type=$image['image_type'];
+$image_content=$image['image_content'];
 
 if (isset($_SESSION['userID']) && $_SESSION['time'] + 3600 > time()) {
     $_SESSION['time'] = time();
@@ -11,21 +16,21 @@ if (isset($_SESSION['userID']) && $_SESSION['time'] + 3600 > time()) {
     // header("Location: ?page=login");
     // exit();
 }
-
 ?>
 
 <script>
 function alert_animation() {
-  $('#msgAlert').fadeIn(2000);
-  setInterval(() => {
-    $('#msgAlert').fadeOut(2000);
-      }, 7000);
+    $('#msgAlert').fadeIn(2000);
+    setInterval(() => {
+        $('#msgAlert').fadeOut(2000);
+    }, 7000);
 };
 </script>
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,106 +38,111 @@ function alert_animation() {
     <link rel="stylesheet" href="../assets/css/style.css">
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 
-    <script
-    src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-    crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <title>twitter</title>
-  </head>
-  <body>
-    <header>
-      <div id="header">
-        <?php if (!empty($_SESSION['messageAlert'])) :?>
-          <div class="msg-alert" id="msgAlert">
-            <script type="text/javascript">
-              alert_animation();
-            </script>
-            <?php echo $_SESSION['messageAlert'];
-            $_SESSION['messageAlert'] = '';
-            ?>
-          </div>
-        <?php endif; ?>
-        <div class="header-logo">
-          <a href="/"><h1>twitter</h1></a>
+</head>
 
-        </div>
-        <div class="header-nav">
-          <nav>
-            <div class="header-item">あなたのタイムライン</div>
-            <div class="header-item">
-              <a href="?page=yourTweets">あなたのツイート</a>
-            </div>
-            <div class="header-item"> <a href="?page=profiles">あなたのプロフィール</a></div>
-          </nav>
-        </div>
-        <?php if (isset($_SESSION['userID'])) :?>
-          <div>
-            <p>
-                <?php
-                list($img_type, $img_content) = image_get_image_content();
-                ?>
-              <img src="data:<?php echo $img_type ?>;base64,<?php echo $img_content; ?>" width="40px" height="auto">
-              <?php print($_SESSION['username'])?>さん
-            </p>
-          </div>
-        <?php endif;?>
-        <div class="header-signup">
-        <?php if (!isset($_SESSION['userID'])) :?>
-          <a href="?page=signUp" class="btn btn-flat"><span>会員登録</span></a>
-        <?php endif; ?>
-        </div>
-        <div class="header-right">
-          <div class="header-login">
-            <?php if (isset($_SESSION['userID'])) :?>
-              <a href="?page=logout" alt="ログアウトボタン">
-                <!-- <i class="fas fa-door-open"></i> -->
-              <i class="fas fa-door-closed"></i>
-              <p>ログアウト</p>
-              </a>
-            <?php else :?>
-              <a href="?page=login" alt="ログインボタン"><i class="fas fa-door-open"></i>
-                <!-- <i class="fas fa-door-closed"></i> -->
-                <p>ログイン</p>
-              </a>
+<body>
+    <header>
+        <div id="header">
+            <?php if (!empty($_SESSION['messageAlert'])) :?>
+                <div class="msg-alert" id="msgAlert">
+                    <script type="text/javascript">
+                        alert_animation();
+                    </script>
+                    <?php echo $_SESSION['messageAlert'];
+                        $_SESSION['messageAlert'] = '';
+                    ?>
+                </div>
             <?php endif; ?>
-          </div>
-          <div class="header-menu">
-            <div class="menu-bar">
-              <div class="hamburger-menu">
-                <span class="hamburger-menu__line"></span>
-              </div>
-              <p>メニュー</p>
+            <div class="header-logo">
+                <a href="/">
+                    <h1>twitter</h1>
+                </a>
             </div>
-            <nav class="nav-sp">
-                <ul>
-                  <li><a href="?page=profiles">あなたのタイムライン</a></li>
-                  <li><a href="?page=yourTweets">あなたのツイート</a></li>
-                  <li><a href="#">あなたのプロフィール</a></li>
-                </ul>
-              </nav>
-          </div>
+            <div class="header-nav">
+                <nav>
+                    <div class="header-item">あなたのタイムライン
+                    </div>
+                    <div class="header-item">
+                        <a href="?page=yourTweets">あなたのツイート</a>
+                    </div>
+                    <div class="header-item">
+                        <a href="?page=profiles">あなたのプロフィール</a>
+                    </div>
+                </nav>
+            </div>
+            <?php if (isset($_SESSION['userID'])) :?>
+                <div>
+                    <p>
+                        <img src="data:<?php echo $image_type ?>;base64,<?php echo $image_content; ?>" width="40px" height="auto">
+                        <?php print($_SESSION['username'])?>さん
+                    </p>
+                </div>
+            <?php endif;?>
+            <div class="header-signup">
+                <?php if (!isset($_SESSION['userID'])) :?>
+                    <a href="?page=signUp" class="btn btn-flat"><span>会員登録</span></a>
+                <?php endif; ?>
+            </div>
+            <div class="header-right">
+                <div class="header-login">
+                    <?php if (isset($_SESSION['userID'])) :?>
+                        <a href="?page=logout" alt="ログアウトボタン">
+                            <i class="fas fa-door-closed"></i>
+                            <p>ログアウト</p>
+                        </a>
+                    <?php else :?>
+                        <a href="?page=login" alt="ログインボタン">
+                            <i class="fas fa-door-open"></i>
+                            <p>ログイン</p>
+                        </a>
+                    <?php endif; ?>
+                </div>
+                <div class="header-menu">
+                    <div class="menu-bar">
+                        <div class="hamburger-menu">
+                            <span class="hamburger-menu__line"></span>
+                        </div>
+                        <p>メニュー</p>
+                    </div>
+                    <nav class="nav-sp">
+                        <ul>
+                            <li>
+                                <a href="?page=profiles">あなたのタイムライン</a>
+                            </li>
+                            <li>
+                                <a href="?page=yourTweets">あなたのツイート</a>
+                            </li>
+                            <li>
+                                <a href="#">あなたのプロフィール</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
         </div>
-      </div>
     </header>
 
 
 <script>
 $(() => {
-  // ハンバーガーメニュークリックイベント
-  $('.hamburger-menu').on('click',() =>{
-    if($('.nav-sp').hasClass('slide')){
-      // ナビゲーション非表示
-      $('.nav-sp').removeClass('slide');
-      // ハンバーガーメニューを元に戻す
-      $('.hamburger-menu').removeClass('open');
-      console.log('remove');
-    }else{
-      // ナビゲーションを表示
-      $('.nav-sp').addClass('slide');
-      // ハンバーガーメニューを✖印に変更
-      $('.hamburger-menu').addClass('open');
-      console.log('add');
-    }
-  });
+    // ハンバーガーメニュークリックイベント
+    $('.hamburger-menu').on('click', () => {
+        if ($('.nav-sp').hasClass('slide')) {
+        // ナビゲーション非表示
+        $('.nav-sp').removeClass('slide');
+        // ハンバーガーメニューを元に戻す
+        $('.hamburger-menu').removeClass('open');
+        console.log('remove');
+        } else {
+        // ナビゲーションを表示
+        $('.nav-sp').addClass('slide');
+        // ハンバーガーメニューを✖印に変更
+        $('.hamburger-menu').addClass('open');
+        console.log('add');
+        }
+    });
 });
 </script>
