@@ -5,7 +5,7 @@
  * @link  https://codelikes.com/phpDocumentor
  */
 
-namespace Classes;
+namespace Classes\Image;
 
 use Controller\Pdo;
 use Controller\Connect;
@@ -23,9 +23,9 @@ class GetImageAtImageId extends Connect
     /**
      * データベースからイメージIDで探して見つかれば画像データを返します。
      *
-     * @return array
+     * @return mixed
      */
-    public function getImageAtImageId():array
+    public function getImageAtImageId():mixed
     {
         parent::__construct();
         $dbh = $this->connectDb();
@@ -34,7 +34,7 @@ class GetImageAtImageId extends Connect
             $stmt = $dbh->prepare($query);
             $stmt->bindValue(':id', (int)$this->image_id, PDO::PARAM_INT);
             $stmt->execute();
-            $image = $stmt->fetch(PDO::FETCH_ASSOC);
+            $image = $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             echo $e;
             exit('データベースエラー getImageAtImageId');

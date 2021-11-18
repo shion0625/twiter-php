@@ -6,19 +6,20 @@
  * @link  https://codelikes.com/phpDocumentor
  */
 
-namespace Classes;
+namespace Classes\Post;
 
 use Controller\Pdo;
 use Controller\Connect;
 
-class GetPostDB extends Connect
+class GetHomePosts extends Connect
 {
     /**
      *データベースに保存されているすべての投稿を取得します。
+     *投稿者のユーザ名、投稿ID、投稿者のID、投稿テキスト、投稿時間、その投稿しゃのトップ画のタイプとコンテンツ
      *
      * @return mixed $post
      */
-    public function getPosts()
+    public function getHomePosts()
     {
         parent::__construct();
         $dbh = $this->connectDb();
@@ -29,7 +30,7 @@ class GetPostDB extends Connect
             $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             echo $e;
-            exit('データベースエラー getPosts');
+            exit('データベースエラー getHomePosts');
         }
         return $posts;
     }

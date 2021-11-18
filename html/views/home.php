@@ -1,16 +1,17 @@
 <?php
-use Classes\InsertPostDB;
-use Classes\GetPostDB;
+use Classes\Post\InsertPost;
+use Classes\Post\GetHomePosts;
 
 //データベースに投稿内容を保存
 if (!empty($_POST) && isset($_POST['send'])) {
     $user_id = (string)fun_h($_SESSION['userID']);
     $post_text = (string)fun_h($_POST['tweet-input']);
-    $insert_post_db = new InsertPostDB($user_id, $post_text);
+    $insert_post_db = new InsertPost($user_id, $post_text);
     $insert_post_db->checkInsertTweet();
 }
-$get_post_db = new GetPostDB();
-$db_posts = $get_post_db->getPosts();
+//投稿内容をデータベースから取得
+$get_post_db = new GetHomePosts();
+$db_posts = $get_post_db->getHomePosts();
 ?>
 
 <script>

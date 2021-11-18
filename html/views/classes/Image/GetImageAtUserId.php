@@ -5,7 +5,7 @@
  * @link  https://codelikes.com/phpDocumentor
  */
 
-namespace Classes;
+namespace Classes\Image;
 
 use Controller\Pdo;
 use Controller\Connect;
@@ -22,11 +22,11 @@ class GetImageAtUserId extends Connect
 
     /**
      * ユーザの画像がデータベースに保存されているかユーザIDを用いて
-     * 調べる。
+     * 調べる。もし、データベースに存在しなかった場合は真偽値を返します。
      *
-     * @return array
+     * @return mixed
      */
-    public function getImageAtUserId():array
+    public function getImageAtUserId()
     {
         parent::__construct();
         $dbh = $this->connectDb();

@@ -1,7 +1,7 @@
 <?php
 
-use Classes\InsertImage;
-use Classes\UsingGetImage;
+use Classes\Image\UsingUpdateInsert;
+use Classes\Image\UsingGetImage;
 
 $get_image = new UsingGetImage('user_id', $_SESSION['userID']);
 $image = $get_image->usingGetImage();
@@ -11,13 +11,16 @@ if (!empty($image)) {
     $image_type = $image['image_type'];
     $image_content = $image['image_content'];
 }
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_FILES['image']['name'])) {
-    // 画像を保存
-    $insert_image = new InsertImage();
-    $result = $insert_image->checkImage();
-    $_SESSION['messageAlert'] = "画像の保存に成功しました。";
-    header('Location: ?page=profiles');
-    exit();
+    // 画像を保存 すでに画像がデータベース内にあればupdate,なければinsertされる。
+    $using_insert_update = new UsingUpdateInsert($is_exit_image);
+    $result = $using_insert_update->actionImage();
+    if ($result['update'] || $result['insert']) {
+        $_SESSION['messageAlert'] = "画像の保存に成功しました。";
+        header('Location: ?page=profiles');
+        exit();
+    }
 }
 ?>
 

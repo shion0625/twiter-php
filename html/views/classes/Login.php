@@ -12,7 +12,7 @@ namespace Classes;
 use Controller\Pdo;
 use Controller\Connect;
 
-class LoginDB extends Connect
+class Login extends Connect
 {
     /** @var string $email */
     private $email;

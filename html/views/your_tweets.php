@@ -1,5 +1,5 @@
 <?php
-use Classes\GetYourPosts;
+use Classes\Post\GetYourPosts;
 
     $get_your_posts = new GetYourPosts($_SESSION['userID']);
     $your_posts = $get_your_posts->getYourPosts();
@@ -12,7 +12,7 @@ use Classes\GetYourPosts;
         <?php foreach ($your_posts as $post) :?>
             <div class="post">
                 <p class="post-user-detail">
-                <img src="" alt="" class ="user-post-img"width="24" height="24">
+                <img src="data:<?php echo $post['image_type'] ?>;base64,<?php echo $image_content; ?>" width="40px" height="auto">
                 <span class="tweet-username">
                     <?php print(fun_h($post['user_name']))?>
                 </span>

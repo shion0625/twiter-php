@@ -7,7 +7,7 @@
  * @link  https://codelikes.com/phpDocumentor
  */
 
-namespace Classes;
+namespace Classes\Post;
 
 use Controller\Pdo;
 use Controller\Connect;
@@ -37,13 +37,12 @@ class GetPost extends Connect
             $stmt = $dbh->prepare($query);
             $stmt->bindValue("post_id", $this->post_id);
             $stmt->execute();
-            $post = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $post = $stmt->fetch(PDO::FETCH_ASSOC);
             /**配列の0番目に投稿の情報が入っている */
-            $post_info = $post[0];
         } catch (PDOException $e) {
             echo $e;
             exit('データベースエラー getPost');
         }
-        return $post_info;
+        return $post;
     }
 }

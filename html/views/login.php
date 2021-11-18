@@ -1,5 +1,5 @@
 <?php
-use Classes\LoginDB;
+use Classes\Login;
 
   //ログイン状態の場合ログイン後のページにリダイレクト
 fun_require_unlogined_session();
@@ -22,7 +22,7 @@ if (!empty($_POST) && isset($_POST['send'])) {
     //メールアドレスとパスワードが送信されて来た場合
     if ($is_pass) {
         //post送信されてきたメールアドレスがデータベースにあ検索
-        $get_login= new LoginDB($email, $password);
+        $get_login= new Login($email, $password);
         $get_login->login();
     }
 }

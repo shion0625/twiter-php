@@ -7,7 +7,7 @@
  * @link  https://codelikes.com/phpDocumentor
  */
 
-namespace Classes;
+namespace Classes\Post;
 
 use Controller\Pdo;
 use Controller\Connect;

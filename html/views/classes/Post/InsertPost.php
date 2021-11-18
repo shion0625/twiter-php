@@ -7,12 +7,12 @@
  * @link  https://codelikes.com/phpDocumentor
  */
 
-namespace Classes;
+namespace Classes\Post;
 
 use Controller\Pdo;
 use Controller\Connect;
 
-class InsertPostDB extends Connect
+class InsertPost extends Connect
 {
     /** @var string $user_id */
     private $user_id;

@@ -1,14 +1,15 @@
 <?php
 print_r($_SESSION);
 require_once __DIR__ . '/../function.php';
-require_once  __DIR__ . '/../db_function.php';
-use Classes\UsingGetImage;
+use Classes\Image\UsingGetImage;
 
 $user_id = $_SESSION['userID'];
-$using_get_image = new UsingGetImage('user_id', $user_id);
-$image = $using_get_image->usingGetImage();
-$image_type=$image['image_type'];
-$image_content=$image['image_content'];
+if ($user_id) {
+    $using_get_image = new UsingGetImage('user_id', $user_id);
+    $image = $using_get_image->usingGetImage();
+    $image_type=$image['image_type'];
+    $image_content=$image['image_content'];
+}
 
 if (isset($_SESSION['userID']) && $_SESSION['time'] + 3600 > time()) {
     $_SESSION['time'] = time();

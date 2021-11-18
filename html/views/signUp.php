@@ -1,6 +1,6 @@
 <?php
 
-use Classes\SignUpDB;
+use Classes\SignUp;
 
 $regexp_em = '/^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/';
 $regexp_pw = '/^(?=.*[A-Z])(?=.*[.?\/-])[a-zA-Z0-9.?\/-]{8,24}$/';
@@ -11,7 +11,7 @@ if (isset($_POST['submit'])) {
     $username = (string)fun_h($_POST['username']);
     $password = (string)fun_h($_POST['password']);
     $email = (string)fun_h($_POST['email']);
-    $sign_up_db = new SignUpDB($username, $password, $email);
+    $sign_up_db = new SignUp($username, $password, $email);
     $error = $sign_up_db -> isCheckCondition();
     if (!$error) {
         $sign_up_db ->resultSignUp();

@@ -12,7 +12,7 @@ namespace Classes;
 use Controller\Pdo;
 use Controller\Connect;
 
-class SignUpDB extends Connect
+class SignUp extends Connect
 {
     /** @param string $username*/
     private $username;

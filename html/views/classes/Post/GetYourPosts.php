@@ -7,7 +7,7 @@
  * @link  https://codelikes.com/phpDocumentor
  */
 
-namespace Classes;
+namespace Classes\Post;
 
 use Controller\Pdo;
 use Controller\Connect;
@@ -27,7 +27,7 @@ class GetYourPosts extends Connect
         parent::__construct();
         $dbh = $this->connectDb();
         try {
-            $query = "SELECT u.user_name, t.* FROM users u INNER JOIN tweet t ON u.email_encode = t.user_id WHERE t.user_id=:user_id ORDER BY t.date_time DESC";
+            $query = "SELECT u.user_name, t.*, i.image_type, i.image_content FROM users AS u INNER JOIN tweet AS t ON u.email_encode = t.user_id LEFT OUTER JOIN user_image AS i ON t.user_id = i.user_id WHERE t.user_id=:user_id ORDER BY t.date_time DESC";
             $stmt = $dbh->prepare($query);
             $stmt->bindValue("user_id", $this->user_id);
             $stmt->execute();

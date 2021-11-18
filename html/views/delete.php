@@ -1,11 +1,10 @@
 <?php
-use Classes\GetPost;
-use Classes\DeletePost;
+use Classes\Post\GetPost;
+use Classes\Post\DeletePost;
 
 print_r($_POST);
 if (!empty($_POST) && $_POST['btn_submit'] == 'delete') {
     $delete_id = fun_h($_POST['delete_post_id']);
-    echo $delete_id;
     $delete_post = new DeletePost($delete_id);
     $flag = $delete_post->deletePost();
     if ($flag) {
