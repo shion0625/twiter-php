@@ -11,20 +11,21 @@ $profile_user_id = (string)$_GET['id'];
 $get_user_info = new GetUserInfo($profile_user_id);
 $user_post = $get_user_info->getUserPost();
 $user_profile = $get_user_info->getUserProfile();
-
 $current_user_id = $_SESSION['userID'];
 $_SESSION['messageAlert'] ='';
+
+$get_image = new UsingGetImage('user_id', $profile_user_id);
+$image = $get_image->usingGetImage();
+$is_exit_image = false;
+if (!empty($image)) {
+    $is_exit_image = true;
+    $image_type = $image['image_type'];
+    $image_content = $image['image_content'];
+}
+
 //このページに送信されたユーザIDが自分だった場合設定ページが表示される。
 $is_yourself = $profile_user_id == $current_user_id;
 if ($is_yourself) {
-    $get_image = new UsingGetImage('user_id', $_SESSION['userID']);
-    $image = $get_image->usingGetImage();
-    $is_exit_image = false;
-    if (!empty($image)) {
-        $is_exit_image = true;
-        $image_type = $image['image_type'];
-        $image_content = $image['image_content'];
-    }
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_FILES['image']['name'])) {
         // 画像を保存 すでに画像がデータベース内にあればupdate,なければinsertされる。
         $using_insert_update = new UsingUpdateInsert($is_exit_image);
@@ -52,7 +53,6 @@ $follower_num= $GetNumFollow->numFollower();
 ?>
 
 <script>
-
 $(document).on('click','#js-follow-btn',(e)=>{
     e.stopPropagation();
     let current_user_id = $('#js-current-user-id').val();
@@ -86,6 +86,14 @@ $(document).on('click','#js-follow-btn',(e)=>{
 
 <div class="user-profile-all-contents">
     <div class="user-profile">
+        <div class="profile-image">
+            <?php if ($is_exit_image) :?>
+                <img src="data:<?php echo $image_type ?>;base64,<?php echo $image_content; ?>" width="100px" height="auto">
+            <?php else :?>
+                <p>プロフィールの画像を登録してください。</p>
+            <?php endif;?>
+        </div>
+        <p><?php echo $user_profile['user_name']?></p>
         <p>フォロー</p>
         <p id="js-follow"><?php echo $follow_num?></p>
         <p>フォロワー</p>
@@ -110,8 +118,8 @@ $(document).on('click','#js-follow-btn',(e)=>{
             </form>
         <?php endif;?>
     </div>
+
     <div class=user-tweets-contents>
-        <h2><?php echo $user_profile['user_name']?>さんのツイート</h2>
         <?php if (empty($user_post)) :
             echo "あなたはまだ投稿していません。";?>
         <?php else :?>
@@ -137,14 +145,9 @@ $(document).on('click','#js-follow-btn',(e)=>{
             <?php endforeach;?>
         <?php endif;?>
     </div>
+
     <?php if ($is_yourself) :?>
         <div class="setting-profile-contents">
-            <?php if ($is_exit_image) :?>
-            <p>現在のプロフィール画像です。</p>
-            <img src="data:<?php echo $image_type ?>;base64,<?php echo $image_content; ?>" width="100px" height="auto">
-            <?php else :?>
-                <p>プロフィールの画像を登録してください。</p>
-            <?php endif;?>
             <form method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <?php if ($result['image'] === 'type') :?>
