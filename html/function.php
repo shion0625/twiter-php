@@ -1,9 +1,4 @@
 <?php
-
-
-
-
-
 /**
  * htmlspecialcharsのラッパー関数
  *

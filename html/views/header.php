@@ -3,7 +3,7 @@ print_r($_SESSION);
 require_once __DIR__ . '/../function.php';
 use Classes\Image\UsingGetImage;
 
-$user_id = $_SESSION['userID'];
+$user_id = (string)$_SESSION['userID'];
 if ($user_id) {
     $using_get_image = new UsingGetImage('user_id', $user_id);
     $image = $using_get_image->usingGetImage();
@@ -67,10 +67,7 @@ function alert_animation() {
                     <div class="header-item">あなたのタイムライン
                     </div>
                     <div class="header-item">
-                        <a href="?page=yourTweets">あなたのツイート</a>
-                    </div>
-                    <div class="header-item">
-                        <a href="?page=profiles">あなたのプロフィール</a>
+                        <a href="?page=profiles&id=<?php echo $_SESSION['userID']?>">あなたのプロフィール</a>
                     </div>
                 </nav>
             </div>

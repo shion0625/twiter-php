@@ -3,7 +3,8 @@
         "psr-4" : {
             "App\\" : "html/src",
             "Controller\\": "html/Controller",
-            "Classes\\":"html/views/Classes"
+            "Classes\\":"html/Classes",
+            "php\\":"php"
         }
     },
     "require": {
