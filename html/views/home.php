@@ -30,10 +30,20 @@ $user_posts = $get_post_db->getHomePosts();
         <div class="close-btn" id="js-close-btn">
             <i class="fas fa-times"></i>
         </div>
-        <button class="tweet-submit-btn" name="send" form="tweet" onclick="socketSend();" type="submit">ツイートする</button>
+        <button
+        class="tweet-submit-btn"
+        name="send"
+        form="tweet"
+        onclick="socketSend();"
+        type="submit">ツイートする</button>
         <form id="tweet" class="tweet-form" method=POST>
-            <textarea id="js-post-content"
-            class="tweet-textarea"name="tweet-input" cols="" rows="10" wrap= "soft"required ></textarea>
+            <textarea
+            id="js-post-content"
+            class="tweet-textarea"
+            name="tweet-input"
+            cols=""
+            rows="10"
+            wrap="soft"required ></textarea>
             <p class="tweet-items">
             <span class="tweet-item"><i class="fas fa-bold"></i></span>
             <span class="tweet-item"><i class="fas fa-italic"></i></span>

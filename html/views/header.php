@@ -67,7 +67,11 @@ if (isset($_SESSION['userID']) && $_SESSION['time'] + 3600 > time()) {
             <?php if (isset($_SESSION['userID'])) :?>
                 <div>
                     <p>
-                        <img src="data:<?php echo $image_type ?>;base64,<?php echo $image_content; ?>" width="40px" height="auto">
+                        <img
+                        src="data:<?php echo $image_type ?>;
+                        base64,<?php echo $image_content; ?>"
+                        width="40px"
+                        height="auto">
                         <?php print($_SESSION['username'])?>さん
                     </p>
                 </div>
@@ -117,23 +121,3 @@ if (isset($_SESSION['userID']) && $_SESSION['time'] + 3600 > time()) {
     </header>
 
 
-<script>
-$(() => {
-    // ハンバーガーメニュークリックイベント
-    $('.hamburger-menu').on('click', () => {
-        if ($('.nav-sp').hasClass('slide')) {
-        // ナビゲーション非表示
-        $('.nav-sp').removeClass('slide');
-        // ハンバーガーメニューを元に戻す
-        $('.hamburger-menu').removeClass('open');
-        console.log('remove');
-        } else {
-        // ナビゲーションを表示
-        $('.nav-sp').addClass('slide');
-        // ハンバーガーメニューを✖印に変更
-        $('.hamburger-menu').addClass('open');
-        console.log('add');
-        }
-    });
-});
-</script>

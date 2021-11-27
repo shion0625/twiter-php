@@ -6,7 +6,11 @@
         class="post-user-detail">
             <?php if (isset($post['image_type']) && isset($post['image_content'])) :
                 $image_content = base64_encode($post['image_content']);?>
-                <img src="data:<?php echo $post['image_type'] ?>;base64,<?php echo $image_content; ?>" width="40px" height="auto">
+                <img
+                src="data:<?php echo $post['image_type'] ?>;
+                base64,<?php echo $image_content; ?>"
+                width="40px"
+                height="auto">
             <?php endif;?>
             <span class="tweet-username">
                 <?php print(fun_h($post['user_name']))?>
@@ -19,8 +23,10 @@
                 <span><?php print(fun_h($post['date_time']))?></span>
                 <?php if ($post['user_name'] == $_SESSION['username']) :?>
                     <form action=?page=delete method="POST">
-                        <input type="hidden" name="post_id" value="
-                        <?php print(fun_h($post['post_id']));?>">
+                        <input
+                        type="hidden"
+                        name="post_id"
+                        value="<?php print(fun_h($post['post_id']));?>">
                             <button>削除</button>
                     </form>
                 <?php endif;?>

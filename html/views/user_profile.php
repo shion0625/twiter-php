@@ -56,7 +56,11 @@ $follower_num= $GetNumFollow->numFollower();
     <div class="user-profile">
         <div class="profile-image">
             <?php if ($is_exit_image) :?>
-                <img src="data:<?php echo $image_type ?>;base64,<?php echo $image_content; ?>" width="100px" height="auto">
+                <img
+                src="data:<?php echo $image_type ?>;
+                base64,<?php echo $image_content; ?>"
+                width="100px"
+                height="auto">
             <?php else :?>
                 <p>プロフィールの画像を登録してください。</p>
             <?php endif;?>
@@ -69,20 +73,20 @@ $follower_num= $GetNumFollow->numFollower();
         <?php if (!$is_yourself) :?>
             <form action="#" method="post">
                 <input
-                    type="hidden"
-                    id="js-current-user-id"
-                    value="<?= $current_user_id ?>">
+                type="hidden"
+                id="js-current-user-id"
+                value="<?= $current_user_id ?>">
                 <input
-                    type="hidden"
-                    id="js-profile-user-id"
-                    value="<?= $profile_user_id ?>">
-                    <button
-                        id="js-follow-btn"
-                        class="display-follow-button"
-                        type="button"
-                        name="follow">
-                        <?php echo $follow_button_text ?>
-                    </button>
+                type="hidden"
+                id="js-profile-user-id"
+                value="<?= $profile_user_id ?>">
+                <button
+                id="js-follow-btn"
+                class="display-follow-button"
+                type="button"
+                name="follow">
+                <?php echo $follow_button_text ?>
+                </button>
             </form>
         <?php endif;?>
     </div>
@@ -107,13 +111,23 @@ $follower_num= $GetNumFollow->numFollower();
                 </div>
                 <div class="form-self-introduction">
                     <label for="self-intro">自己紹介：</label>
-                    <input type="text" id="self-intro" name="self-intro" maxlength="30px" size="35px">
+                    <input
+                    type="text"
+                    id="self-intro"
+                    name="self-intro"
+                    maxlength="30px"
+                    size="35px">
                 </div>
                 <div class="birthday">
                     <label for="birthday">誕生日：</label>
-                    <input type="date" id="birthday" name="birthday" >
+                    <input
+                    type="date"
+                    id="birthday"
+                    name="birthday" >
                 </div>
-                <button type="submit" class="btn">保存</button>
+                <button
+                type="submit"
+                class="btn">保存</button>
             </form>
         </div>
     <?php endif;?>

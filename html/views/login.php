@@ -37,18 +37,30 @@ if (!empty($_POST) && isset($_POST['send'])) {
     <div class="login-contents">
         <div class="message"><?php echo $message;?></div>
         <form method=POST>
-        <div class="message"><?php echo $message_email;?>
-        </div>
-        <input id="input_email" class="login-form-input-email" name="email" type="text" placeholder="メールアドレスを入力して下さい">
-        <div id="pwBox">
-        <div class="message"><?php echo $message_pw;?></div>
-        <input id="input_password" class="login-form-input-pw" name="password" type="password" placeholder="パスワードを入力して下さい"><i id="eye-icon"class="fas fa-eye"></i>
-        </div>
-        <!-- <div>
-        <input id="save" type="checkbox" name="save" value="on">
-        <label for="save">次回から自動でログインする</label>
-        </div> -->
-        <button name="send" class="login-btn">ログイン</button>
+            <div class="message"><?php echo $message_email;?></div>
+            <input
+            id="input_email"
+            class="login-form-input-email"
+            name="email"
+            type="text"
+            placeholder="メールアドレスを入力して下さい">
+            <div id="pwBox">
+                <div class="message"><?php echo $message_pw;?></div>
+                <input
+                id="input_password"
+                class="login-form-input-pw"
+                name="password"
+                type="password"
+                placeholder="パスワードを入力して下さい">
+                <i id="eye-icon"class="fas fa-eye"></i>
+            </div>
+            <!-- <div>
+            <input id="save" type="checkbox" name="save" value="on">
+            <label for="save">次回から自動でログインする</label>
+            </div> -->
+            <button
+            name="send"
+            class="login-btn">ログイン</button>
     </form>
     </div>
 </div>

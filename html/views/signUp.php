@@ -42,7 +42,8 @@ if (isset($_POST['submit'])) {
                             <?php echo $error['user'];?>
                         </p>
                     <?php endif;?>
-                    <input type="text"
+                    <input
+                    type="text"
                     id="input_username"
                     name="username"
                     placeholder="ユーザー名を入力してください"
@@ -59,7 +60,8 @@ if (isset($_POST['submit'])) {
                             <?php echo $error['email'];?>
                         </p>
                     <?php endif;?>
-                    <input type="email"
+                    <input
+                    type="email"
                     id="input_email"
                     name="email"
                     placeholder="メールアドレスを入力してください">
@@ -75,14 +77,23 @@ if (isset($_POST['submit'])) {
                         </p>
                     <?php endif;?>
                     <div class="password-box">
-                        <input type="password" id="inputPassword" name="password" placeholder="パスワードを入力して下さい">
+                        <input
+                        type="password"
+                        id="inputPassword"
+                        name="password"
+                        placeholder="パスワードを入力して下さい">
                         <i id="eye-icon"class="fas fa-eye"></i>
                     </div>
                     <p>条件:大文字、小文字、数字、記号のすべてを最低一文字は使用して下さい</p>
                     <p>パスワードは8文字以上24文字以下で入力してください。使用可能な記号は(. / ? -)です</p>
                 </div>
-                <input type="hidden" name="created_date" value="<?php echo date('Y-m-d');?>">
-                <button name="submit" id="signup-btn" type = "submit">会員登録</button>
+                <input
+                type="hidden"
+                name="created_date"
+                value="<?php echo date('Y-m-d');?>">
+                <button name="submit"
+                id="signup-btn"
+                type = "submit">会員登録</button>
             </form>
         </div>
     </div>
