@@ -9,7 +9,7 @@ use Classes\Follow\GetNumFollow;
 $profile_user_id = (string)$_GET['id'];
 
 $get_user_info = new GetUserInfo($profile_user_id);
-$user_post = $get_user_info->getUserPost();
+$user_posts= $get_user_info->getUserPost();
 $user_profile = $get_user_info->getUserProfile();
 $current_user_id = $_SESSION['userID'];
 $_SESSION['messageAlert'] ='';
@@ -52,38 +52,6 @@ $follow_num = $GetNumFollow->numFollow();
 $follower_num= $GetNumFollow->numFollower();
 ?>
 
-<script>
-$(document).on('click','#js-follow-btn',(e)=>{
-    e.stopPropagation();
-    let current_user_id = $('#js-current-user-id').val();
-    let profile_user_id = $('#js-profile-user-id').val();
-    let formData = new FormData();
-    formData.append('current_user_id', current_user_id);
-    formData.append('profile_user_id', profile_user_id);
-    $.ajax({
-        type: 'POST',
-        url: 'views/ajax_follow_process.php',
-        dataType: 'json',
-        data: formData,
-        cache: false,
-        contentType: false,
-        processData: false,
-    }).done(function(data){
-        if(data.success) {
-            $('.display-follow-button').text('フォロー');
-        } else {
-            $(".display-follow-button").text('フォロー中');
-        }
-        $('#js-follow').text(data.follow);
-        $("#js-follower").text(data.follower);
-        console.log(data);
-    }).fail(function(data){
-        console.log(data.responseText);
-        console.log('fail');
-    });
-});
-</script>
-
 <div class="user-profile-all-contents">
     <div class="user-profile">
         <div class="profile-image">
@@ -120,41 +88,30 @@ $(document).on('click','#js-follow-btn',(e)=>{
     </div>
 
     <div class=user-tweets-contents>
-        <?php if (empty($user_post)) :
+        <?php if (empty($user_posts)) :
             echo "あなたはまだ投稿していません。";?>
         <?php else :?>
-            <?php foreach ($user_post as $post) :?>
-                <div class="post">
-                    <p class="post-user-detail">
-                    <img src="data:<?php echo $post['image_type'] ?>;base64,<?php echo $image_content; ?>" width="40px" height="auto">
-                    <span class="tweet-username">
-                        <?php print(fun_h($post['user_name']))?>
-                    </span>
-                    </p>
-                    <p class="tweet-content">
-                        <?php print(fun_h($post['tweet_content']))?>
-                    </p>
-                    <p class="appendix">
-                        <span><?php print(fun_h($post['date_time']))?></span>
-                        <form action=?page=delete method="POST">
-                            <input type="hidden" name="post_id" value="<?php print(fun_h($post['post_id']));?>">
-                            <button>削除</button>
-                        </form>
-                    </p>
-                </div>
-            <?php endforeach;?>
+            <?php include(__DIR__ . '/component/user_posts.php')?>
         <?php endif;?>
     </div>
 
     <?php if ($is_yourself) :?>
         <div class="setting-profile-contents">
             <form method="post" enctype="multipart/form-data">
-                <div class="form-group">
+                <div class="form-image">
                     <?php if ($result['image'] === 'type') :?>
                         <p>*写真は「.gif」、「.jpg」、「.png」の画像を指定してください</p>
                     <?php endif; ?>
                     <label>画像を選択:</label>
-                    <input type="file" name="image" required>
+                    <input type="file" name="image">
+                </div>
+                <div class="form-self-introduction">
+                    <label for="self-intro">自己紹介：</label>
+                    <input type="text" id="self-intro" name="self-intro" maxlength="30px" size="35px">
+                </div>
+                <div class="birthday">
+                    <label for="birthday">誕生日：</label>
+                    <input type="date" id="birthday" name="birthday" >
                 </div>
                 <button type="submit" class="btn">保存</button>
             </form>

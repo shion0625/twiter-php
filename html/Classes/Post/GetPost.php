@@ -35,7 +35,7 @@ class GetPost extends Connect
         try {
             $query = "SELECT u.user_name, t.* FROM tweet t INNER JOIN users u ON t.user_id = u.email_encode WHERE t.post_id=:post_id";
             $stmt = $dbh->prepare($query);
-            $stmt->bindValue("post_id", $this->post_id);
+            $stmt->bindValue(":post_id", $this->post_id);
             $stmt->execute();
             $post = $stmt->fetch(PDO::FETCH_ASSOC);
             /**配列の0番目に投稿の情報が入っている */

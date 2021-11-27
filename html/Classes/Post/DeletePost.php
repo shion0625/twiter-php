@@ -15,11 +15,11 @@ use Controller\Connect;
 class DeletePost extends Connect
 {
     /** @var string $delete_id */
-    private $delete_id;
+    private $post_id;
 
-    public function __construct($delete_id)
+    public function __construct($post_id)
     {
-        $this->delete_id = $delete_id;
+        $this->post_id = $post_id;
     }
 
     public function deletePost()
@@ -28,7 +28,7 @@ class DeletePost extends Connect
         $dbh = $this->connectDb();
         try {
             $query_delete ="DELETE FROM tweet WHERE post_id=:post_id";
-            $post_id=(int)$this->delete_id;
+            $post_id=(int)$this->post_id;
             $stmt = $dbh->prepare($query_delete);
             $stmt->bindValue(":post_id", $post_id);
             $flag= $stmt->execute();

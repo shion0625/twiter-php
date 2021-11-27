@@ -3,6 +3,8 @@
 *各ページへのルータまたすべてのページで使用するファイルも読み込んでいる
 *
 */
+// ini_set("memory_limit", "3072M");
+// echo phpinfo();
 ob_start();
 session_start();
 require './vendor/autoload.php';
@@ -22,6 +24,8 @@ if ($_GET['page'] == 'login') {
     include("views/user_profile.php");
 } elseif ($_GET['page'] == 'delete') {
     include(__DIR__ . '/views/delete.php');
+} elseif ($_GET['page'] == "your_timeline") {
+    include(__DIR__ . '/views/your_timeline.php');
 } else {
     include(__DIR__ .'/views/home.php');
 }

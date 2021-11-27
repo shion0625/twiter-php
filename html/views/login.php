@@ -27,21 +27,6 @@ if (!empty($_POST) && isset($_POST['send'])) {
     }
 }
 ?>
-<script>
-//パスワードの可視化と不可視化
-$(()=> {
-    $('#eye-icon').on('click',() => {
-    const input = $('#input_password');
-    if (input.attr('type') == 'password') {
-        input.attr('type','text');
-    } else {
-        input.attr('type','password');
-    }
-    $('#eye-icon').toggleClass('fa-eye');
-    $('#eye-icon').toggleClass('fa-eye-slash');
-    });
-});
-</script>
 
 <div class="login-all-contents">
     <h2>ログイン</h2>

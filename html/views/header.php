@@ -19,18 +19,10 @@ if (isset($_SESSION['userID']) && $_SESSION['time'] + 3600 > time()) {
 }
 ?>
 
-<script>
-function alert_animation() {
-    $('#msgAlert').fadeIn(2000);
-    setInterval(() => {
-        $('#msgAlert').fadeOut(2000);
-    }, 7000);
-};
-</script>
+
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -41,6 +33,7 @@ function alert_animation() {
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script type="text/javascript"src="../assets/js/index.js"></script>
     <title>twitter</title>
 </head>
 
@@ -64,7 +57,7 @@ function alert_animation() {
             </div>
             <div class="header-nav">
                 <nav>
-                    <div class="header-item">あなたのタイムライン
+                    <div class="header-item"><a href="?page=your_timeline">あなたのタイムライン</a>
                     </div>
                     <div class="header-item">
                         <a href="?page=profiles&id=<?php echo $_SESSION['userID']?>">あなたのプロフィール</a>

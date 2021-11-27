@@ -20,18 +20,22 @@ class SignUp extends Connect
     private $password;
     /** @param string $email */
     private $email;
+    /** @param string $created_date */
+    private $created_date;
 
     /**
      * 文字列型でユーザの名前、パスワード、メールアドレスを受け取ります。
      * @param string $username
      * @param string $password
      * @param string $email
+     * @param string $created_date
      */
-    public function __construct(string $username, string $password, string $email)
+    public function __construct(string $username, string $password, string $email, string $created_date)
     {
         $this -> username = $username;
         $this -> password = $password;
         $this -> email = $email;
+        $this -> created_date = $created_date;
     }
 
     /**
@@ -107,12 +111,14 @@ class SignUp extends Connect
         parent::__construct();
         $dbh = $this->connectDb();
         try {
-            $query = "INSERT INTO users (user_name, password, email, email_encode) VALUES (:username, :password, :email, :email_encode)";
+            $query = "INSERT INTO users (user_name, password, email, email_encode, created_date)
+            VALUES (:username, :password, :email, :email_encode, :created_date)";
             $stmt = $dbh->prepare($query);
             $stmt->bindValue(":username", $this->username);
             $stmt->bindValue(":password", password_hash($this->password, PASSWORD_DEFAULT));
             $stmt->bindValue(":email", $this->email);
             $stmt->bindValue(":email_encode", password_hash($this->email, PASSWORD_DEFAULT));
+            $stmt->bindValue(":created_date", $this->created_date);
             $flag = $stmt->execute();
         } catch (PDOException $e) {
             $e->getMessage() . PHP_EOL;//エラーが出たときの処理
