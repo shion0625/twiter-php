@@ -22,7 +22,7 @@ if (isset($_SESSION['userID']) && $_SESSION['time'] + 3600 > time()) {
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -68,10 +68,8 @@ if (isset($_SESSION['userID']) && $_SESSION['time'] + 3600 > time()) {
                 <div>
                     <p>
                         <img
-                        src="data:<?php echo $image_type ?>;
-                        base64,<?php echo $image_content; ?>"
-                        width="40px"
-                        height="auto">
+                        src="data:<?php echo $image_type ?>;base64,<?php echo $image_content; ?>"
+                        class="user-top-image">
                         <?php print($_SESSION['username'])?>さん
                     </p>
                 </div>

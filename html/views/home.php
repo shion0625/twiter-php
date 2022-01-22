@@ -31,7 +31,7 @@ $user_posts = $get_post_db->getHomePosts();
             <i class="fas fa-times"></i>
         </div>
         <button
-        class="tweet-submit-btn"
+        class="tweet-submit-btn btn"
         name="send"
         form="tweet"
         onclick="socketSend();"

@@ -57,8 +57,7 @@ $follower_num= $GetNumFollow->numFollower();
         <div class="profile-image">
             <?php if ($is_exit_image) :?>
                 <img
-                src="data:<?php echo $image_type ?>;
-                base64,<?php echo $image_content; ?>"
+                src="data:<?php echo $image_type ?>;base64,<?php echo $image_content; ?>"
                 width="100px"
                 height="auto">
             <?php else :?>
